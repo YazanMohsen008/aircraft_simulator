@@ -1,0 +1,27 @@
+#version 330 core
+
+in vec2 passed_textureCoords;
+
+out vec4 out_Color;
+
+uniform sampler2D backgroundTexture;
+uniform sampler2D rTexture;
+uniform sampler2D gTexture;
+uniform sampler2D bTexture;
+uniform sampler2D blendMap;
+
+void main(void) {
+
+    vec4 blendMapColor = texture(blendMap, passed_textureCoords);
+    float backTexturedAmount = 1 - (blendMapColor.r + blendMapColor.g + blendMapColor.b);
+
+    vec2 tiledCoordinates = passed_textureCoords * 40.0;
+
+    vec4 backgroundTextureColor = texture(backgroundTexture, tiledCoordinates) * backTexturedAmount;
+    vec4 bTextureColor = texture(bTexture, tiledCoordinates) * blendMapColor.b;
+    vec4 rTextureColor = texture(rTexture, tiledCoordinates) * blendMapColor.r;
+    vec4 gTextureColor = texture(gTexture, tiledCoordinates) * blendMapColor.g;
+
+    vec4 finalColor = backgroundTextureColor + bTextureColor + rTextureColor + gTextureColor;
+    out_Color = finalColor;
+}
