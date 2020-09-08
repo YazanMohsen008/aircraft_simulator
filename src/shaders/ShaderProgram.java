@@ -18,7 +18,8 @@ public abstract class ShaderProgram {
     private int fragmentShaderID;
 
     private static FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
-    ShaderProgram(String vertexFile, String fragmentFile) {
+
+    public ShaderProgram(String vertexFile, String fragmentFile) {
         vertexShaderID = loadShader(vertexFile, GL20.GL_VERTEX_SHADER);
         fragmentShaderID = loadShader(fragmentFile, GL20.GL_FRAGMENT_SHADER);
 

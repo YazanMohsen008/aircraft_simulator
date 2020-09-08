@@ -4,9 +4,7 @@ import Models.TexturedModel;
 import Terrain.Terrain;
 import entitites.Airplane;
 import entitites.Camera;
-import entitites.Entity;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.util.vector.Vector;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.*;
 import Models.RawModel;
@@ -28,7 +26,9 @@ public class MainGameLoop {
         TexturedModel bunnyTexturedModel = new TexturedModel(bunny, bunnyTexture);
 
         // Airplane class suppose to load an airplane, but for now it loads a bunny
-        Airplane movingBunny = new Airplane(bunnyTexturedModel, new Vector3f(100, 0, -50), 0, 0, 0, 1);
+        Airplane movingBunny = new Airplane(bunnyTexturedModel, new Vector3f(100, 0, -50),
+                0, 0, 0, 0.25f);
+
         Camera camera = new Camera(movingBunny);
 
         // loading groundTexture
@@ -41,20 +41,15 @@ public class MainGameLoop {
         TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 
         //loading terrain
-        Terrain terrain0 = new Terrain(0, 0, loader, texturePack, blendMap);
-        Terrain terrain1 = new Terrain(-1, 0, loader, texturePack, blendMap);
-        Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap);
-        Terrain terrain3 = new Terrain(0, -1, loader, texturePack, blendMap);
+        Terrain terrain0 = new Terrain(0, 0, loader, texturePack, blendMap, "heightMap");
 
-        MasterRenderer renderer = new MasterRenderer();
+        MasterRenderer renderer = new MasterRenderer(loader);
         while (!Display.isCloseRequested()) {
             camera.move();
-            movingBunny.move();
+            // TODO: need to check which terrain the airplane is moving on for proper collision detection
+            movingBunny.move(terrain0);
             renderer.processEntity(movingBunny);
             renderer.processTerrain(terrain0);
-            renderer.processTerrain(terrain1);
-            renderer.processTerrain(terrain2);
-            renderer.processTerrain(terrain3);
 
             renderer.render(camera);
 

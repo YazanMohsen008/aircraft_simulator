@@ -1,7 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d0d2a02-2c3d-4717-8d01-97c61c5b37ee" name="Default Changelist" comment="" />
+    <list default="true" id="4d0d2a02-2c3d-4717-8d01-97c61c5b37ee" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/jars/PNGDecoder.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/back.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/bottom.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/front.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/heightMap.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/top.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/skybox/SkyboxRenderer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/skybox/SkyboxShader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/skybox/skyboxFragmentShader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/skybox/skyboxVertexShader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/textures/TextureData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/using_lwjgl/Terrain/Terrain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/using_lwjgl/Terrain/Terrain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/using_lwjgl/engineTester/MainGameLoop.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/using_lwjgl/engineTester/MainGameLoop.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/using_lwjgl/entitites/Airplane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/using_lwjgl/entitites/Airplane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/using_lwjgl/entitites/Camera.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/using_lwjgl/entitites/Camera.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/using_lwjgl/renderEngine/DisplayManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/using_lwjgl/renderEngine/DisplayManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/using_lwjgl/renderEngine/Loader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/using_lwjgl/renderEngine/Loader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/using_lwjgl/renderEngine/MasterRenderer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/using_lwjgl/renderEngine/MasterRenderer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/using_lwjgl/shaders/ShaderProgram.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/using_lwjgl/shaders/ShaderProgram.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/using_lwjgl/toolbox/Maths.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/using_lwjgl/toolbox/Maths.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Terrain/Terrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Terrain/Terrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entitites/Airplane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entitites/Airplane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entitites/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entitites/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderEngine/DisplayManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/DisplayManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderEngine/Loader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/Loader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shaders/ShaderProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/ShaderProgram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/toolbox/Maths.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/toolbox/Maths.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/using_lwjgl.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/using_lwjgl.ipr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/using_lwjgl.iws" beforeDir="false" afterPath="$PROJECT_DIR$/using_lwjgl.iws" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +52,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1gV4S8gPXPYB1udsIR91BxNh10B" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -25,11 +62,16 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/natives" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/jars/PNGDecoder.jar!/" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.13422817" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/skybox" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="MainGameLoop" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -64,15 +106,18 @@
     </task>
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="278" y="59" width="847" height="684" key="#Project_Structure" timestamp="1598187343571">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="278" y="59" width="847" height="684" key="#Project_Structure/0.27.1366.741@0.27.1366.741" timestamp="1598187343571" />
-    <state x="141" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598187225062">
+    <state x="141" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598473896257">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="141" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1366.741@0.27.1366.741" timestamp="1598187225062" />
+    <state x="141" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1366.741@0.27.1366.741" timestamp="1598473896257" />
     <state x="367" y="202" width="643" height="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1598194328600">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
@@ -85,26 +130,26 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="790" y="27" width="566" height="741" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1366.741@0.27.1366.741" timestamp="1598358842983" />
-    <state x="329" y="144" width="735" height="534" key="FileChooserDialogImpl" timestamp="1598187334022">
+    <state x="329" y="144" width="735" height="534" key="FileChooserDialogImpl" timestamp="1599578777324">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="329" y="144" width="735" height="534" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1598187334022" />
-    <state width="1366" height="180" key="GridCell.Tab.0.bottom" timestamp="1598458137799">
+    <state x="329" y="144" width="735" height="534" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1599578777324" />
+    <state width="1366" height="180" key="GridCell.Tab.0.bottom" timestamp="1599599163430">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1366" height="180" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1598458137799" />
-    <state width="1366" height="180" key="GridCell.Tab.0.center" timestamp="1598458137797">
+    <state width="1366" height="180" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1599599163430" />
+    <state width="1366" height="180" key="GridCell.Tab.0.center" timestamp="1599599163429">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1366" height="180" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1598458137797" />
-    <state width="1366" height="180" key="GridCell.Tab.0.left" timestamp="1598458137796">
+    <state width="1366" height="180" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1599599163429" />
+    <state width="1366" height="180" key="GridCell.Tab.0.left" timestamp="1599599163429">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1366" height="180" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1598458137796" />
-    <state width="1366" height="180" key="GridCell.Tab.0.right" timestamp="1598458137798">
+    <state width="1366" height="180" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1599599163429" />
+    <state width="1366" height="180" key="GridCell.Tab.0.right" timestamp="1599599163430">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1366" height="180" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1598458137798" />
+    <state width="1366" height="180" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1599599163430" />
     <state width="1366" height="224" key="GridCell.Tab.1.bottom" timestamp="1598197764193">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
@@ -121,17 +166,25 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state width="1366" height="224" key="GridCell.Tab.1.right/0.27.1366.741@0.27.1366.741" timestamp="1598197764192" />
-    <state x="339" y="225" key="com.intellij.ide.util.TipDialog" timestamp="1598338595933">
+    <state x="172" y="31" width="1022" height="737" key="SettingsEditor" timestamp="1599578779341">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="339" y="225" key="com.intellij.ide.util.TipDialog/0.27.1366.741@0.27.1366.741" timestamp="1598338595933" />
-    <state x="347" y="80" width="652" height="649" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598316037196">
+    <state x="172" y="31" width="1022" height="737" key="SettingsEditor/0.27.1366.741@0.27.1366.741" timestamp="1599578779341" />
+    <state x="100" y="127" width="1166" height="541" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1599577809017">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="347" y="80" width="652" height="649" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1366.741@0.27.1366.741" timestamp="1598316037196" />
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1598458143982">
+    <state x="100" y="127" width="1166" height="541" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.27.1366.741@0.27.1366.741" timestamp="1599577809017" />
+    <state x="339" y="225" key="com.intellij.ide.util.TipDialog" timestamp="1599510117539">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1598458143982" />
+    <state x="339" y="225" key="com.intellij.ide.util.TipDialog/0.27.1366.741@0.27.1366.741" timestamp="1599510117539" />
+    <state x="347" y="80" width="652" height="649" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1599598475850">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state x="347" y="80" width="652" height="649" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1366.741@0.27.1366.741" timestamp="1599598475850" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1599598600709">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1599598600709" />
   </component>
 </project>

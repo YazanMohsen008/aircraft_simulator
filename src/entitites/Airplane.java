@@ -1,6 +1,7 @@
 package entitites;
 
 import Models.TexturedModel;
+import Terrain.Terrain;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
@@ -9,7 +10,7 @@ import renderEngine.DisplayManager;
 public class Airplane extends Entity{
 
     private static final float RUN_SPEED = 20;
-    private static final float TURN_SPEED = 1;
+    private static final float TURN_SPEED = 35;
 
     private float currentSpeed = 0;
     private float currentTurnSpeed = 0;
@@ -19,14 +20,21 @@ public class Airplane extends Entity{
         super(model, position, rotX, rotY, rotZ, scale);
     }
 
-    public void move() {
+    public void move(Terrain terrain) {
         checkInputs();
         super.increaseRotation(0, currentTurnSpeed * DisplayManager.getFrameTimeSeconds(), 0);
         float distance = currentSpeed * DisplayManager.getFrameTimeSeconds();
         float dx = (float) (distance * Math.sin(Math.toRadians(super.getRotY())));
         float dz = (float) (distance * Math.cos(Math.toRadians(super.getRotY())));
-        System.out.println(DisplayManager.getFrameTimeSeconds());
         super.increasePosition(dx, 0, dz);
+
+        // TODO: collision detection after airplane physics code is added
+
+/*
+        float terrainHeight = terrain.getHeight(super.getPosition().x, super.getPosition().z);
+        if (super.getPosition().y - terrainHeight < 0)
+            super.getPosition().y = terrainHeight;
+*/
     }
 
     private void checkInputs() {
@@ -41,7 +49,7 @@ public class Airplane extends Entity{
         if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
             this.currentTurnSpeed = -TURN_SPEED;
         } else if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-            this.currentTurnSpeed= RUN_SPEED;
+            this.currentTurnSpeed = TURN_SPEED;
         } else {
             this.currentTurnSpeed = 0;
         }
