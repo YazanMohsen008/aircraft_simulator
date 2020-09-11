@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty xmlns="http://nifty-gui.lessvoid.com/nifty-gui">
+
+    <useStyles filename="nifty-default-styles.xml" />
+    <useControls filename="nifty-default-controls.xml" />
+
+    <screen id="start" controller="gui.ParametersScreenController">
+
+        <layer childLayout="center">
+
+            <panel childLayout="horizontal" align="right" valign="bottom" width="50%" height="40%"
+                   marginBottom="20"
+                   backgroundColor="#55a5" padding="10">
+                <!-- simple vertical scrollbar -->
+                <panel backgroundColor="#80a5" childLayout="vertical" width="50%">
+                    <control with="100%" height="100%" name="label"
+                             text="Text Input Will goes Here" />
+                </panel>
+
+                <panel name="scrollBarPanel" childLayout="horizontal">
+                    <panel childLayout="vertical">
+                        <control marginBottom="2%" marginTop="2%" name="label" text="Hola" />
+                        <control id="vsb1" name="verticalScrollbar" align="center" width="25%" height="85%"
+                                 worldMax="1000.0" worldPageSize="100.0" initial="10.0"
+                                 buttonStepSize="10.0" pageStepSize="100.0" />
+                    </panel>
+
+                    <panel childLayout="vertical">
+
+                        <control marginBottom="2%" marginTop="2%" name="label" text="Hola" />
+                        <control id="vsb2" name="verticalScrollbar" align="center" width="25%" height="85%"
+                                 worldMax="1000.0" worldPageSize="100.0" initial="10.0"
+                                 buttonStepSize="10.0" pageStepSize="100.0" />
+                    </panel>
+
+                    <panel childLayout="vertical">
+                        <control marginBottom="2%" marginTop="2%" name="label" text="Hola" />
+                        <control id="vsb3" name="verticalScrollbar" align="center" width="25%" height="85%"
+                                 worldMax="1000.0" worldPageSize="100.0" initial="10.0"
+                                 buttonStepSize="10.0" pageStepSize="100.0" />
+
+                    </panel>
+
+                    <panel childLayout="vertical">
+                        <control marginBottom="2%" marginTop="2%" name="label" text="Hola" />
+                        <control id="vsb4" name="verticalScrollbar" align="center" width="25%" height="85%"
+                                 worldMax="1000.0" worldPageSize="100.0" initial="10.0"
+                                 buttonStepSize="10.0" pageStepSize="100.0" />
+                    </panel>
+
+                </panel>
+
+            </panel>
+        </layer>
+
+    </screen>
+</nifty>

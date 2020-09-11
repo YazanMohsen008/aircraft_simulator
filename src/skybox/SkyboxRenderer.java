@@ -56,7 +56,8 @@ public class SkyboxRenderer {
             SIZE, -SIZE,  SIZE
     };
 
-    public static String[] TEXTURE_FILES = {"right", "left", "top", "bottom", "back", "front"};
+    public static String[] TEXTURE_FILES = {"left", "right", "top", "bottom", "back", "front"};
+    //public static String[] TEXTURE_FILES = {"px", "nx", "py", "ny", "pz", "nz"};
     private RawModel cube;
     private int texture;
     private SkyboxShader shader;

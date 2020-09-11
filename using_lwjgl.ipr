@@ -146,13 +146,20 @@
         <root url="jar://$PROJECT_DIR$/lib/jars/slick-util.jar!/" />
         <root url="file://$PROJECT_DIR$" />
         <root url="jar://$PROJECT_DIR$/lib/jars/PNGDecoder.jar!/" />
+        <root url="file://$PROJECT_DIR$/lib/nifty" />
+        <root url="file://$PROJECT_DIR$/lib/nifty/dependencies" />
       </CLASSES>
       <JAVADOC />
       <NATIVE>
         <root url="file://$PROJECT_DIR$/lib/natives" />
       </NATIVE>
-      <SOURCES />
+      <SOURCES>
+        <root url="file://$PROJECT_DIR$/lib/nifty" />
+      </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$" recursive="false" />
+      <jarDirectory url="file://$PROJECT_DIR$/lib/nifty" recursive="false" />
+      <jarDirectory url="file://$PROJECT_DIR$/lib/nifty/dependencies" recursive="false" />
+      <jarDirectory url="file://$PROJECT_DIR$/lib/nifty" recursive="false" type="SOURCES" />
     </library>
   </component>
 </project>
