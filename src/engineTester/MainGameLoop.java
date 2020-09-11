@@ -1,6 +1,7 @@
 package engineTester;
 
 import Models.TexturedModel;
+import Physics.MathVector;
 import Terrain.Terrain;
 import entitites.Airplane;
 import entitites.Camera;
@@ -26,8 +27,8 @@ public class MainGameLoop {
         TexturedModel bunnyTexturedModel = new TexturedModel(bunny, bunnyTexture);
 
         // Airplane class suppose to load an airplane, but for now it loads a bunny
-        Airplane movingBunny = new Airplane(bunnyTexturedModel, new Vector3f(100, 0, -50),
-                0, 0, 0, 0.25f);
+        Airplane movingBunny = new Airplane(bunnyTexturedModel, new MathVector(100, 0, -50),
+                0, 0, 0, 0.25f,null);
 
         Camera camera = new Camera(movingBunny);
 
@@ -47,7 +48,7 @@ public class MainGameLoop {
         while (!Display.isCloseRequested()) {
             camera.move();
             // TODO: need to check which terrain the airplane is moving on for proper collision detection
-            movingBunny.move(terrain0);
+            movingBunny.StepSimulation();
             renderer.processEntity(movingBunny);
             renderer.processTerrain(terrain0);
 

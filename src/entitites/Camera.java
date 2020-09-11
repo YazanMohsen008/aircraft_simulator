@@ -10,7 +10,7 @@ public class Camera {
     private float angleAroundAirplane = 0;
 
     private Vector3f position = new Vector3f(0, 0, 0);
-    private float pitch = 10;
+    private float pitch = 20;
     private float yaw = 0;
     private float roll;
 

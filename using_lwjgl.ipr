@@ -132,7 +132,7 @@
       <module fileurl="file://$PROJECT_DIR$/using_lwjgl.iml" filepath="$PROJECT_DIR$/using_lwjgl.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="VcsDirectoryMappings">
@@ -149,7 +149,7 @@
       </CLASSES>
       <JAVADOC />
       <NATIVE>
-        <root url="file://$PROJECT_DIR$/lib/natives" />
+        <root url="file://$PROJECT_DIR$/lib" />
       </NATIVE>
       <SOURCES />
       <jarDirectory url="file://$PROJECT_DIR$" recursive="false" />

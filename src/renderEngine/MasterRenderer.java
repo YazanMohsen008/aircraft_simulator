@@ -20,6 +20,7 @@ public class MasterRenderer {
     private StaticShader staticShader = new StaticShader();
     private EntityRenderer entityRenderer;
 
+
     private TerrainShader terrainShader = new TerrainShader();
     private TerrainRenderer terrainRenderer;
 

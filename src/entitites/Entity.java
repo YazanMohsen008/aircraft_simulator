@@ -1,18 +1,22 @@
 package entitites;
 
 import Models.TexturedModel;
+import Physics.MathVector;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Entity {
 
-    private TexturedModel model;
-    private Vector3f position;
+    private   TexturedModel model;
+    protected MathVector Position;
+
+
+
     private float rotX, rotY, rotZ;
     private float scale;
 
-    public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
+    public Entity(TexturedModel model, MathVector position, float rotX, float rotY, float rotZ, float scale) {
         this.model = model;
-        this.position = position;
+        this.Position = position;
         this.rotX = rotX;
         this.rotY = rotY;
         this.rotZ = rotZ;
@@ -20,9 +24,9 @@ public class Entity {
     }
 
     public void increasePosition(float dx, float dy, float dz) {
-        this.position.x += dx;
-        this.position.y += dy;
-        this.position.z += dz;
+        this.Position.x += dx;
+        this.Position.y += dy;
+        this.Position.z += dz;
     }
 
     public void increaseRotation(float dx, float dy, float dz) {
@@ -35,8 +39,8 @@ public class Entity {
         return model;
     }
 
-    public Vector3f getPosition() {
-        return position;
+    public MathVector getPosition() {
+        return Position;
     }
 
     public float getRotX() {
