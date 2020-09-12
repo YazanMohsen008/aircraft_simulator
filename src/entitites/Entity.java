@@ -7,7 +7,7 @@ import org.lwjgl.util.vector.Vector3f;
 public class Entity {
 
     private   TexturedModel model;
-    protected MathVector Position;
+    private MathVector Position;
 
 
 

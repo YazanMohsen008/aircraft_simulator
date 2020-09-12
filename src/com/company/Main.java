@@ -29,8 +29,8 @@ public class Main {
         TexturedModel bunnyTexturedModel = new TexturedModel(bunny, bunnyTexture);
 
         // Airplane class suppose to load an airplane, but for now it loads a bunny
-        Airplane movingBunny = new Airplane(bunnyTexturedModel, new MathVector(-50, 0, 100), 0, 0, 0,
-                1,null);
+        Airplane movingBunny = new Airplane(bunnyTexturedModel, new MathVector(100, 30, 50), 0, 0, 0,
+                0.25f,null);
         movingBunny.InitializeAirplane();
         Camera camera = new Camera(movingBunny);
     
@@ -55,9 +55,11 @@ public class Main {
             movingBunny.StepSimulation();
             renderer.processEntity(movingBunny);
             renderer.processTerrain(terrain0);
+/*
             renderer.processTerrain(terrain1);
             renderer.processTerrain(terrain2);
             renderer.processTerrain(terrain3);
+*/
 
             renderer.render(camera);
 
