@@ -23,18 +23,21 @@ public class Entity {
         this.scale = scale;
     }
 
-    public void increasePosition(float dx, float dy, float dz) {
+    public void increasePosition(float dx,float dz,float dy) {
         this.Position.x += dx;
         this.Position.y += dy;
         this.Position.z += dz;
     }
 
-    public void increaseRotation(float dx, float dy, float dz) {
+    public void increaseRotation(float dx,float dz,  float dy) {
         this.rotX += dx;
         this.rotY += dy;
         this.rotZ += dz;
     }
-
+    public void SetPositionZ(float z)
+    {
+        this.Position.z =z;
+    }
     public TexturedModel getModel() {
         return model;
     }

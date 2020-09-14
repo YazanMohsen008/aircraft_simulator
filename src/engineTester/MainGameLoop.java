@@ -27,7 +27,7 @@ public class MainGameLoop {
         TexturedModel bunnyTexturedModel = new TexturedModel(bunny, bunnyTexture);
 
         // Airplane class suppose to load an airplane, but for now it loads a bunny
-        Airplane movingBunny = new Airplane(bunnyTexturedModel, new MathVector(100, 0, -50),
+        Airplane movingBunny = new Airplane(bunnyTexturedModel, new MathVector(500,0 ,50),
                 0, 0, 0, 0.25f,null);
 
         Camera camera = new Camera(movingBunny);
@@ -43,7 +43,7 @@ public class MainGameLoop {
 
         //loading terrain
         Terrain terrain0 = new Terrain(0, 0, loader, texturePack, blendMap, "heightMap");
-
+        movingBunny.InitializeAirplane();
         MasterRenderer renderer = new MasterRenderer(loader);
         while (!Display.isCloseRequested()) {
             camera.move();

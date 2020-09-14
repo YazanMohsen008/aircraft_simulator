@@ -66,19 +66,23 @@ public class Quaternion {
     public Quaternion Conjugate() { return new  Quaternion( n, new MathVector( -v.x, -v.y, -v.z)); }
 
     public void Mult(Quaternion q2) {
-        Quaternion q1=this;
+        Quaternion q1=this.copy();
         n=          q1.n*q2.n - q1.v.x*q2.v.x - q1.v.y*q2.v.y - q1.v.z*q2.v.z;
         v.x=        q1.n*q2.v.x + q1.v.x*q2.n + q1.v.y*q2.v.z - q1.v.z*q2.v.y;
         v.y=        q1.n*q2.v.y + q1.v.y*q2.n + q1.v.z*q2.v.x - q1.v.x*q2.v.z;
         v.z=        q1.n*q2.v.z + q1.v.z*q2.n + q1.v.x*q2.v.y - q1.v.y*q2.v.x;
     }
-
-    public void Mult(MathVector q2) {
+    /**
+     ij=−ji=k
+     jk=−kj=i
+     ki=−ik=j,
+	*/
+    public void Mult(MathVector V) {
             Quaternion q=this.copy();
-            n=    -(q.v.x*q2.x + q.v.y*q2.y + q.v.z*q2.z);
-            v.x=    q.n*q2.x + q.v.y*q2.z - q.v.z*q2.y;
-            v.y=    q.n*q2.y + q.v.z*q2.x - q.v.x*q2.z;
-            v.z=    q.n*q2.z + q.v.x*q2.y - q.v.y*q2.x;
+            n=    -(q.v.x*V.x + q.v.y*V.y + q.v.z*V.z);
+            v.x=    q.n*V.x + q.v.y*V.z - q.v.z*V.y;
+            v.y=    q.n*V.y + q.v.z*V.x - q.v.x*V.z;
+            v.z=    q.n*V.z + q.v.x*V.y - q.v.y*V.x;
     }
 
     public float QGetAngle(Quaternion q)
@@ -109,11 +113,11 @@ public class Quaternion {
     }
 
     public MathVector QVRotate(MathVector v) {
-        Quaternion t=this.copy();
-        t.Mult(v);
-        t.Mult(this.Conjugate());
 
-        return t.GetVector();
+        Quaternion t1=this.copy();
+        t1.Mult(v);
+        t1.Mult(this.Conjugate());
+        return t1.GetVector();
     }
 
     public Quaternion MakeQFromEulerAngles(float x, float y, float z) {

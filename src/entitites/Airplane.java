@@ -31,12 +31,12 @@ public class Airplane extends Entity {
 
 
     //Math
-    final float	g	= 0;		// acceleration due to gravity, ft/s^2
+    final float	g	= -32.174f;		// acceleration due to gravity, ft/s^2
     final float	rho = 0.0023769f;	// desity of air at sea level, slugs/ft^3
     final float	tol = 0.0001f;		// float type tolerance
 
-    final float _MAXTHRUST=29;
-    final float _DTHRUST=0.1f;
+    final float _MAXTHRUST=500;
+    final float _DTHRUST=1f;
 
     //Rigid Body
     private float      AirplaneMass;
@@ -52,7 +52,7 @@ public class Airplane extends Entity {
     private MathVector Forces= new MathVector(0, 0f, 0);            // total force on body
     private MathVector Moments= new MathVector(0, 0f, 0);           // total moment (torque) on body
 
-    float ThrustForce = 10;
+    float ThrustForce = 29;
     MathVector Thrust=new MathVector();
 
     boolean		Stalling;		// Flag to let us know if we are in a stalled condition
@@ -84,10 +84,10 @@ public class Airplane extends Entity {
         this.AngularVelocity.z = 0.0f;
 
         // Set the initial thrust, forces and moments
-        this.Forces.x = 0.0f;
+        this.Forces.x = 1.0f;
         this.Forces.y = 0.0f;
         this.Forces.z = 0.0f;
-        ThrustForce = 0.0f;
+        ThrustForce = 20;
 
         this.Moments.x = 0.0f;
         this.Moments.y = 0.0f;
@@ -161,7 +161,7 @@ public class Airplane extends Entity {
 
             Ixx += AirplaneElements[i].LocalInertia.getX() + AirplaneElements[i].Mass *
                     (AirplaneElements[i].CGPosition.getY() *AirplaneElements[i].CGPosition.getY()+
-                            AirplaneElements[i].CGPosition.getZ()*AirplaneElements[i].CGPosition.getZ());
+                     AirplaneElements[i].CGPosition.getZ()*AirplaneElements[i].CGPosition.getZ());
 
             //Iyy= E[i].Io.Y+ E[i].mass * e[i].CG.Z^2 + e[i].CG.X^2
             Iyy += AirplaneElements[i].LocalInertia.getY() + AirplaneElements[i].Mass *
@@ -197,7 +197,8 @@ public class Airplane extends Entity {
         this.Inertia.setE32(-Iyz);
         this.Inertia.setE33(Izz);
         this.InertiaInverse = this.Inertia.Inverse();
-
+        System.out.println(Inertia);
+        System.out.println(InertiaInverse);
     }
     public   void   CalcAirplaneMassProperties() {
         AirplaneElements[0].Mass = 6.56f;
@@ -326,9 +327,8 @@ public class Airplane extends Entity {
         MathVector vtmp;
         Stalling = false;
 
-        for(int i=0;i<8;i++)
-        {
-            MathVector Resultant=new MathVector();
+        for(int i=0;i<8;i++) {
+            MathVector Resultant = new MathVector();
 
             if (i == 6) // The tail/rudder is a special case since it can rotate;
                 AirplaneElements[i].CalculateNormalVector();
@@ -348,19 +348,18 @@ public class Airplane extends Entity {
             Velocity.Add(vtmp);
 
             // Calculate local air speed
-
             LocalSpeed = Velocity.Magnitude();
 
             // Find the direction in which drag will act.
             // Drag always acts inline with the relative
             // velocity but in the opposing direction
-            DragVector=Velocity.copy();
-            if(LocalSpeed > 1.)
+            DragVector = Velocity.copy();
+            if (LocalSpeed > 1.)
                 DragVector.Div(-LocalSpeed);
             // Find the direction in which lift will act.
             // Lift is always perpendicular to the drag vector
 
-            LiftVector =DragVector.copy ();
+            LiftVector = DragVector.copy();
             LiftVector.CrossProduct(AirplaneElements[i].NormalVector);
             LiftVector.CrossProduct(DragVector);
 
@@ -375,36 +374,33 @@ public class Airplane extends Entity {
             tmp = DragVector.DotProduct(AirplaneElements[i].NormalVector);
 
 
-            if(tmp > 1.) tmp = 1;
-            if(tmp < -1) tmp = -1;
-
+            if (tmp > 1.) tmp = 1;
+            if (tmp < -1) tmp = -1;
             AttackAngle = RadiansToDegrees((float) Math.asin(tmp));
             // Determine the resultant force (lift and drag) on the element.
-            tmp = 0.5f * rho * LocalSpeed*LocalSpeed * AirplaneElements[i].Area;
+            tmp = 0.5f * rho * LocalSpeed * LocalSpeed * AirplaneElements[i].Area;
             if (i == 6) // Tail/rudder
             {
                 MathVector temp1 = LiftVector.copy();
-                temp1.Mult( RudderLiftCoefficient(AttackAngle) );
+                temp1.Mult(RudderLiftCoefficient(AttackAngle));
                 Resultant.Add(temp1);
 
-                MathVector temp2=DragVector.copy();
+                MathVector temp2 = DragVector.copy();
                 temp2.Mult(RudderDragCoefficient(AttackAngle));
                 Resultant.Add(temp2);
                 Resultant.Mult(tmp);
 
-            }
-            else if (i == 7) {
-                Resultant=DragVector.copy();
+            } else if (i == 7) {
+                Resultant = DragVector.copy();
                 Resultant.Mult(0.5f);
-                Resultant .Mult(tmp); // simulate fuselage drag
-            }
-            else{
+                Resultant.Mult(tmp); // simulate fuselage drag
+            } else {
                 MathVector temp1 = LiftVector.copy();
-                temp1.Mult( LiftCoefficient(AttackAngle,AirplaneElements[i].Flap) );
+                temp1.Mult(LiftCoefficient(AttackAngle, AirplaneElements[i].Flap));
                 Resultant.Add(temp1);
 
                 MathVector temp2 = DragVector.copy();
-                temp2.Mult( DragCoefficient(AttackAngle,AirplaneElements[i].Flap) );
+                temp2.Mult(DragCoefficient(AttackAngle, AirplaneElements[i].Flap));
                 Resultant.Add(temp2);
 
                 Resultant.Mult(tmp);
@@ -414,8 +410,7 @@ public class Airplane extends Entity {
             // We can easily determine stall by noting when the coefficient
             // of lift is 0. In reality, stall warning devices give warnings well
             // before the lift goes to 0 to give the pilot time to correct.
-            if (i<=3)
-            {
+            if (i <= 3) {
                 if (LiftCoefficient(AttackAngle, AirplaneElements[i].Flap) == 0)
                     Stalling = true;
             }
@@ -434,19 +429,251 @@ public class Airplane extends Entity {
         Fb .Add(Thrust);
         // Convert forces from model space to earth space
         this.Forces = Orientation.QVRotate(Fb);
+
         // Apply gravity (g is defined as -32.174 ft/s^2)
         MathVector Weight=new MathVector(0,0,g * this.AirplaneMass);
-
-
         this.Forces.Add(Weight);
-        this.Moments.Add(Mb);
 
+        this.Moments.Add(Mb);
     }
     public  float  DegreesToRadians(float deg) {
 
         return (float) (deg * Math.PI) / 180.0f;
     }
     private float  RadiansToDegrees(float rad) { return (rad * 180.0f) / (float) Math.PI; }
+
+    public void StepSimulation() {
+        CheckInput();
+        // calculate all of the forces and moments on the airplane:
+        CalcAirplaneLoads();
+        // calculate the acceleration of the airplane in earth space:
+
+        // Take care of translation first:
+        // (If this body were a particle, this is all you would need to do.)
+        MathVector Ae;
+        float dt=DisplayManager.getFrameTimeSeconds();
+
+        if (dt > (0.016f)) dt = (0.016f);
+        if (dt < 0.001f) dt = 0.001f;
+
+        Ae = this.Forces.copy();
+        Ae.Div(AirplaneMass);
+        Ae.Mult(dt);
+
+        // calculate the velocity of the airplane in earth space:
+        this.Velocity.Add(Ae);
+        // calculate the position of the airplane in earth space:
+        Velocity.Mult(dt);
+        increasePosition(Velocity.x, Velocity.y, Velocity.z);
+
+        // Now handle the rotations:
+        float mag;
+
+        MathVector IA=Inertia.Mult(AngularVelocity);
+        MathVector AV=AngularVelocity.copy();
+        AV.CrossProduct(IA);
+        MathVector M=Moments.copy();
+        M.Sub(AV);
+        IA=InertiaInverse.Mult(M);
+        AngularVelocity.Add(IA);
+        System.out.println(AngularVelocity);
+
+        // calculate the new rotation quaternion:
+        Quaternion temp =this.Orientation.copy();
+        temp.Mult(AngularVelocity);
+        temp.Mult(0.5f);
+        temp.Mult(dt);
+        this.Orientation.Add(temp);
+
+        // now normalize the orientation quaternion:
+        mag = this.Orientation.Magnitude();
+        if (mag != 0)
+            this.Orientation.Div( mag);
+        // calculate the velocity in body space:
+        // (we'll need this to calculate lift and drag forces)
+
+        this.VelocityBody = (Orientation.Conjugate()).QVRotate(this.Velocity);
+
+        // calculate the air speed:
+        this.Speed = this.Velocity.Magnitude();
+        // get the Euler angles for our information
+        MathVector u;
+        u = Orientation.MakeEulerAnglesFromQ();
+
+        this.EulerAngles.x = u.x; // roll
+        this.EulerAngles.y = u.y; // pitch
+        this.EulerAngles.z = u.z; // yaw
+        increaseRotation(this.EulerAngles.x, this.EulerAngles.y, this.EulerAngles.z);
+   //     SetCameraPosition(-this.getPosition().y, this.getPosition().z, this.getPosition().x);
+
+       // MathVector vz = GetBodyZAxisVector(); // pointing up in our coordinate system
+        //MathVector vx = GetBodyXAxisVector(); // pointing forward in our coordinate system
+      //  SetCameraOrientation(	-vx.y, vx.z, vx.x, -vz.y, vz.z, vz.x);
+    }
+
+
+
+    MathVector	GetBodyZAxisVector()
+    {
+
+        MathVector	v=new MathVector();
+
+        v.x = 0.0f;
+        v.y = 0.0f;
+        v.z = 1.0f;
+
+        return Orientation.QVRotate(v);
+    }
+
+    //------------------------------------------------------------------------//
+    MathVector	GetBodyXAxisVector()
+    {
+
+        MathVector v=new MathVector();
+
+        v.x = 1.0f;
+        v.y = 0.0f;
+        v.z = 0.0f;
+
+        return Orientation.QVRotate(v);
+
+    }
+    void IncThrust() {
+        ThrustForce+=(_DTHRUST);
+        if(ThrustForce > _MAXTHRUST)
+            ThrustForce = _MAXTHRUST;
+    }
+    void DecThrust() {
+        ThrustForce-=(_DTHRUST);
+        if(ThrustForce < 0)
+            ThrustForce = 0;
+    }
+    void LeftRudder()
+    {
+        AirplaneElements[6].Incidence = 16;
+    }//16
+    void RightRudder()
+    {
+        AirplaneElements[6].Incidence = -16;//-16
+    }
+    void ZeroRudder()
+    {
+        AirplaneElements[6].Incidence = 0;
+    }
+    void RollLeft() {
+        AirplaneElements[0].Flap = 1;
+        AirplaneElements[3].Flap = -1;
+    }
+    void RollRight() {
+        AirplaneElements[0].Flap = -1;
+        AirplaneElements[3].Flap = 1;
+    }
+    void ZeroAilerons() {
+        AirplaneElements[0].Flap = 0;
+        AirplaneElements[3].Flap = 0;
+    }
+    void PitchUp() {
+        AirplaneElements[4].Flap = 1;
+        AirplaneElements[5].Flap = 1;
+    }
+    void PitchDown() {
+        AirplaneElements[4].Flap = -1;
+        AirplaneElements[5].Flap = -1;
+    }
+    void ZeroElevators() {
+        AirplaneElements[4].Flap = 0;
+        AirplaneElements[5].Flap = 0;
+    }
+    void FlapsDown() {
+        boolean Flaps=false;
+        AirplaneElements[1].Flap = -1;
+        AirplaneElements[2].Flap = -1;
+        Flaps = true;
+    }
+    void ZeroFlaps() {
+        boolean Flaps=false;
+        AirplaneElements[1].Flap = 0;
+        AirplaneElements[2].Flap = 0;
+        Flaps = false;
+    }
+    public void CheckInput() {
+        MathVector vz, vx;
+        char[] buf;
+        char[] s;
+
+        ZeroRudder();
+        ZeroAilerons();
+        ZeroElevators();
+
+        // pitch down
+        if (Keyboard.isKeyDown(Keyboard.KEY_UP))
+            PitchDown();
+
+        // pitch up
+        if (Keyboard.isKeyDown(Keyboard.KEY_DOWN))
+            PitchUp();
+
+        // roll left
+        if (Keyboard.isKeyDown(Keyboard.KEY_LEFT))
+            RollLeft();
+
+        // roll right
+        if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
+            RollRight();
+
+        //  Increase thrust
+/*
+        System.out.println(getRotX());
+        System.out.println(getRotY());
+        System.out.println(getRotZ());
+        System.out.println("-------------");
+*/
+        if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+            IncThrust();
+
+            System.out.println("Mass = " + AirplaneMass);
+            System.out.println("Inertia =" + Inertia.toString());
+            System.out.println("Velocity = " + Velocity);
+            System.out.println("Velocity Body" + VelocityBody);
+            System.out.println("Angular Velocity" + AngularVelocity);
+            System.out.println("Angular Velocity" + AngularVelocity);
+            System.out.println("Forces" + Forces);
+            System.out.println("Moments" + Moments);
+            System.out.println("Rot x" + EulerAngles.x);
+            System.out.println("Rot y" + EulerAngles.y);
+            System.out.println("Rot z" + EulerAngles.z);
+            System.out.println("-------------");
+
+        }
+
+        //  Decrease thrust
+        if (Keyboard.isKeyDown(Keyboard.KEY_Z)) // Z
+            DecThrust();
+
+        // yaw left
+        if (Keyboard.isKeyDown(Keyboard.KEY_X)) {// x
+            LeftRudder();
+        }
+
+        // yaw right
+        if (Keyboard.isKeyDown(Keyboard.KEY_C)) // c
+            RightRudder();
+
+        // landing flaps down
+        if (Keyboard.isKeyDown(Keyboard.KEY_F)) //f
+            FlapsDown();
+
+        // landing flaps up
+        if (Keyboard.isKeyDown(Keyboard.KEY_D)) // d
+            ZeroFlaps();
+
+        if(Stalling)
+        {
+            System.out.println("Warning!!! ");
+        }
+
+    }
+
 
     float	LiftCoefficient(float angle, int flaps)
     {
@@ -567,255 +794,28 @@ public class Airplane extends Entity {
             }
         }
         return cd;
-    }
+    }}
 
-
-    public void StepSimulation() {
-        CheckInput();
-        // calculate all of the forces and moments on the airplane:
-        CalcAirplaneLoads();
-        // calculate the acceleration of the airplane in earth space:
-
-        // Take care of translation first:
-        // (If this body were a particle, this is all you would need to do.)
-        MathVector Ae;
-        float dt=DisplayManager.getFrameTimeSeconds();
-
-        if (dt > (0.016f)) dt = (0.016f);
-        if (dt < 0.001f) dt = 0.001f;
-
-        Ae = this.Forces.copy();
-        Ae.Div(AirplaneMass);
-        Ae.Mult(dt);
-
-        // calculate the velocity of the airplane in earth space:
-        this.Velocity.Add(Ae);
-        // calculate the position of the airplane in earth space:
-        Velocity.Mult(dt);
-
-        increasePosition(Velocity.x, Velocity.y, Velocity.z);
-
-        // Now handle the rotations:
-        float mag;
-
-        MathVector IA=Inertia.Mult(AngularVelocity);
-        MathVector AV=AngularVelocity.copy();
-        AV.CrossProduct(IA);
-        MathVector M=Moments.copy();
-        M.Sub(AV);
-        IA=InertiaInverse.Mult(M);
-        AngularVelocity.Add(IA);
-
-        // calculate the new rotation quaternion:
-        Quaternion temp =this.Orientation.copy();
-
-        temp.Mult(AngularVelocity);
-        temp.Mult(0.5f);
-        temp.Mult(dt);
-        this.Orientation.Add(temp);
-
-        // now normalize the orientation quaternion:
-        mag = this.Orientation.Magnitude();
-        if (mag != 0)
-            this.Orientation.Div( mag);
-        // calculate the velocity in body space:
-        // (we'll need this to calculate lift and drag forces)
-        this.VelocityBody = (Orientation.Conjugate()).QVRotate(this.Velocity);
-
-        // calculate the air speed:
-        this.Speed = this.Velocity.Magnitude();
-        // get the Euler angles for our information
-        MathVector u;
-        u = Orientation.MakeEulerAnglesFromQ();
-
-        this.EulerAngles.x = u.x; // roll
-        this.EulerAngles.y = u.y; // pitch
-        this.EulerAngles.z = u.z; // yaw
-        increaseRotation(this.EulerAngles.x, this.EulerAngles.y, this.EulerAngles.z);
-    }
-
-
-
-    MathVector	GetBodyZAxisVector()
-    {
-
-        MathVector	v=new MathVector();
-
-        v.x = 0.0f;
-        v.y = 0.0f;
-        v.z = 1.0f;
-
-        return Orientation.QVRotate(v);
-    }
-
-    //------------------------------------------------------------------------//
-    MathVector	GetBodyXAxisVector()
-    {
-
-        MathVector v=new MathVector();
-
-        v.x = 1.0f;
-        v.y = 0.0f;
-        v.z = 0.0f;
-
-        return Orientation.QVRotate(v);
-
-    }
-    void IncThrust() {
-        ThrustForce+=(_DTHRUST);
-        if(ThrustForce > _MAXTHRUST)
-            ThrustForce = _MAXTHRUST;
-    }
-    void DecThrust() {
-        ThrustForce-=(_DTHRUST);
-        if(ThrustForce < 0)
-            ThrustForce = 0;
-    }
-    void LeftRudder()
-    {
-        AirplaneElements[6].Incidence = 6;
-    }//16
-    void RightRudder()
-    {
-        AirplaneElements[6].Incidence = -6;//-16
-    }
-    void ZeroRudder()
-    {
-        AirplaneElements[6].Incidence = 0;
-    }
-    void RollLeft() {
-        AirplaneElements[0].Flap = 1;
-        AirplaneElements[3].Flap = -1;
-    }
-    void RollRight() {
-        AirplaneElements[0].Flap = -1;
-        AirplaneElements[3].Flap = 1;
-    }
-    void ZeroAilerons() {
-        AirplaneElements[0].Flap = 0;
-        AirplaneElements[3].Flap = 0;
-    }
-    void PitchUp() {
-        AirplaneElements[4].Flap = 1;
-        AirplaneElements[5].Flap = 1;
-    }
-    void PitchDown() {
-        AirplaneElements[4].Flap = -1;
-        AirplaneElements[5].Flap = -1;
-    }
-    void ZeroElevators() {
-        AirplaneElements[4].Flap = 0;
-        AirplaneElements[5].Flap = 0;
-    }
-    void FlapsDown() {
-        boolean Flaps=false;
-        AirplaneElements[1].Flap = -1;
-        AirplaneElements[2].Flap = -1;
-        Flaps = true;
-    }
-    void ZeroFlaps() {
-        boolean Flaps=false;
-        AirplaneElements[1].Flap = 0;
-        AirplaneElements[2].Flap = 0;
-        Flaps = false;
-    }
-    public void CheckInput() {
-        MathVector vz, vx;
-        char[] buf;
-        char[] s;
-
-        ZeroRudder();
-        ZeroAilerons();
-        ZeroElevators();
-
-        // pitch down
-        if (Keyboard.isKeyDown(Keyboard.KEY_UP))
-            PitchDown();
-
-        // pitch up
-        if (Keyboard.isKeyDown(Keyboard.KEY_DOWN))
-            PitchUp();
-
-        // roll left
-        if (Keyboard.isKeyDown(Keyboard.KEY_LEFT))
-            RollLeft();
-
-        // roll right
-        if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
-            RollRight();
-
-        //  Increase thrust
-/*
-        System.out.println(getRotX());
-        System.out.println(getRotY());
-        System.out.println(getRotZ());
-        System.out.println("-------------");
-*/
-        if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-            IncThrust();
-
-            System.out.println("Mass = " + AirplaneMass);
-            System.out.println("Inertia =" + Inertia.toString());
-            System.out.println("Velocity = " + Velocity);
-            System.out.println("Velocity Body" + VelocityBody);
-            System.out.println("Angular Velocity" + AngularVelocity);
-            System.out.println("Angular Velocity" + AngularVelocity);
-            System.out.println("Forces" + Forces);
-            System.out.println("Moments" + Moments);
-            System.out.println("Rot x" + EulerAngles.x);
-            System.out.println("Rot y" + EulerAngles.y);
-            System.out.println("Rot z" + EulerAngles.z);
-            System.out.println("-------------");
-
-        }
-
-        //  Decrease thrust
-        if (Keyboard.isKeyDown(Keyboard.KEY_Z)) // Z
-            DecThrust();
-
-        // yaw left
-        if (Keyboard.isKeyDown(Keyboard.KEY_X)) {// x
-            LeftRudder();
-        }
-
-        // yaw right
-        if (Keyboard.isKeyDown(Keyboard.KEY_C)) // c
-            RightRudder();
-
-        // landing flaps down
-        if (Keyboard.isKeyDown(Keyboard.KEY_F)) //f
-            FlapsDown();
-
-        // landing flaps up
-        if (Keyboard.isKeyDown(Keyboard.KEY_D)) // d
-            ZeroFlaps();
-
-        if(Stalling)
-        {
-            System.out.println("Warning!!! ");
-        }
-
-    }
-}
 
 
 /**
- Earth coordinates:
- x points North
- y points West
- z points up
+     Earth coordinates:
+     x points North
+     y points West
+     z points up
 
 
- Z   X
- |  /
- | /
- |/
- Y------+
+     Z   X
+     |  /
+     | /
+     |/
+     Y------+
 
 
- Body coordinates:	x points to the front
- y points to left
- z points up
+     Body coordinates:
+     x points to the front
+     y points to left
+     z points up
 
 
 
