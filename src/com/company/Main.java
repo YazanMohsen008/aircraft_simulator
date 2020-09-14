@@ -56,7 +56,7 @@ public class Main {
             renderer.processEntity(movingBunny);
             renderer.processTerrain(terrain0);
 /*
-            renderer.processTerrain(terrain1);
+            renderer.processTerrain(terrain1)o
             renderer.processTerrain(terrain2);
             renderer.processTerrain(terrain3);
 */

@@ -31,12 +31,12 @@ public class Airplane extends Entity {
 
 
     //Math
-    final float	g	= -32.174f;		// acceleration due to gravity, ft/s^2
+    final float	g	= 0; //-32.174f;		// acceleration due to gravity, ft/s^2
     final float	rho = 0.0023769f;	// desity of air at sea level, slugs/ft^3
     final float	tol = 0.0001f;		// float type tolerance
 
     final float _MAXTHRUST=500;
-    final float _DTHRUST=1f;
+    final float _DTHRUST=100f;
 
     //Rigid Body
     private float      AirplaneMass;
@@ -52,7 +52,7 @@ public class Airplane extends Entity {
     private MathVector Forces= new MathVector(0, 0f, 0);            // total force on body
     private MathVector Moments= new MathVector(0, 0f, 0);           // total moment (torque) on body
 
-    float ThrustForce = 29;
+    float ThrustForce = 290;
     MathVector Thrust=new MathVector();
 
     boolean		Stalling;		// Flag to let us know if we are in a stalled condition
@@ -87,7 +87,7 @@ public class Airplane extends Entity {
         this.Forces.x = 1.0f;
         this.Forces.y = 0.0f;
         this.Forces.z = 0.0f;
-        ThrustForce = 20;
+        ThrustForce = 100;
 
         this.Moments.x = 0.0f;
         this.Moments.y = 0.0f;
@@ -197,8 +197,6 @@ public class Airplane extends Entity {
         this.Inertia.setE32(-Iyz);
         this.Inertia.setE33(Izz);
         this.InertiaInverse = this.Inertia.Inverse();
-        System.out.println(Inertia);
-        System.out.println(InertiaInverse);
     }
     public   void   CalcAirplaneMassProperties() {
         AirplaneElements[0].Mass = 6.56f;
@@ -354,8 +352,9 @@ public class Airplane extends Entity {
             // Drag always acts inline with the relative
             // velocity but in the opposing direction
             DragVector = Velocity.copy();
+            DragVector.Mult(-1);
             if (LocalSpeed > 1.)
-                DragVector.Div(-LocalSpeed);
+                DragVector.Div(LocalSpeed);
             // Find the direction in which lift will act.
             // Lift is always perpendicular to the drag vector
 
@@ -463,8 +462,10 @@ public class Airplane extends Entity {
         // calculate the velocity of the airplane in earth space:
         this.Velocity.Add(Ae);
         // calculate the position of the airplane in earth space:
-        Velocity.Mult(dt);
-        increasePosition(Velocity.x, Velocity.y, Velocity.z);
+        MathVector pos = Velocity.copy();
+        pos.Mult(dt);
+
+        increasePosition(pos.x, pos.y, pos.z);
 
         // Now handle the rotations:
         float mag;
@@ -475,8 +476,9 @@ public class Airplane extends Entity {
         MathVector M=Moments.copy();
         M.Sub(AV);
         IA=InertiaInverse.Mult(M);
+        IA.Mult(dt);
         AngularVelocity.Add(IA);
-        System.out.println(AngularVelocity);
+
 
         // calculate the new rotation quaternion:
         Quaternion temp =this.Orientation.copy();
@@ -492,7 +494,8 @@ public class Airplane extends Entity {
         // calculate the velocity in body space:
         // (we'll need this to calculate lift and drag forces)
 
-        this.VelocityBody = (Orientation.Conjugate()).QVRotate(this.Velocity);
+        Quaternion qQ = Orientation.Conjugate();
+        this.VelocityBody = qQ.QVRotate(this.Velocity);
 
         // calculate the air speed:
         this.Speed = this.Velocity.Magnitude();
@@ -503,7 +506,9 @@ public class Airplane extends Entity {
         this.EulerAngles.x = u.x; // roll
         this.EulerAngles.y = u.y; // pitch
         this.EulerAngles.z = u.z; // yaw
-        increaseRotation(this.EulerAngles.x, this.EulerAngles.y, this.EulerAngles.z);
+
+      //  increaseRotation(this.EulerAngles.x, this.EulerAngles.y, this.EulerAngles.z);
+
    //     SetCameraPosition(-this.getPosition().y, this.getPosition().z, this.getPosition().x);
 
        // MathVector vz = GetBodyZAxisVector(); // pointing up in our coordinate system
@@ -631,6 +636,7 @@ public class Airplane extends Entity {
         if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
             IncThrust();
 
+/*
             System.out.println("Mass = " + AirplaneMass);
             System.out.println("Inertia =" + Inertia.toString());
             System.out.println("Velocity = " + Velocity);
@@ -643,6 +649,7 @@ public class Airplane extends Entity {
             System.out.println("Rot y" + EulerAngles.y);
             System.out.println("Rot z" + EulerAngles.z);
             System.out.println("-------------");
+*/
 
         }
 

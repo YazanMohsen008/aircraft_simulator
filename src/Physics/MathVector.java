@@ -62,9 +62,10 @@ public class MathVector {
     }
 
     public void CrossProduct(MathVector Vector) {
-        x=   this.y*Vector.z - this.z*Vector.y;
-        y=  -this.x*Vector.z + this.z*Vector.x;
-        z=   this.x*Vector.y - this.y*Vector.x ;
+        MathVector copy = this.copy();
+        x=   copy.y*Vector.z - copy.z*Vector.y;
+        y=  -copy.x*Vector.z + copy.z*Vector.x;
+        z=   copy.x*Vector.y - copy.y*Vector.x ;
     }
 
     public float DotProduct(MathVector Vector) {

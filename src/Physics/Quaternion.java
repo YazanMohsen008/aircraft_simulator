@@ -114,9 +114,12 @@ public class Quaternion {
 
     public MathVector QVRotate(MathVector v) {
 
-        Quaternion t1=this.copy();
+        Quaternion t1 = this.copy();
+        Quaternion QQ = t1.Conjugate();
+
         t1.Mult(v);
-        t1.Mult(this.Conjugate());
+        t1.Mult(QQ);
+
         return t1.GetVector();
     }
 
@@ -175,7 +178,9 @@ public class Quaternion {
         return u;
     }
     public Quaternion copy() {
-        return  new Quaternion(n,v);
+
+        MathVector v1 = v.copy();
+        return  new Quaternion(n,v1);
     }
 
     public  float  DegreesToRadians(float deg) {

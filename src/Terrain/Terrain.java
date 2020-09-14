@@ -122,7 +122,7 @@ public class Terrain {
         height /= MAX_PIXEL_COLOR;
         height *= MAX_HEIGHT;
 
-        return height;
+        return 0;
     }
     public float getHeight(float worldX, float worldZ) {
         float terrainX = worldX - this.x;
