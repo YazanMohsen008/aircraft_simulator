@@ -168,13 +168,13 @@ public class Quaternion {
             r12 = 2 * (q.v.x*q.v.y - q.n*q.v.z);
             r13 = 2 * (q.v.x*q.v.z + q.n*q.v.y);
             u.x = RadiansToDegrees(0.0f); //roll
-            u.y = RadiansToDegrees((float) (-(Math.PI/2) * r31/tmp)); // pitch
-            u.z = RadiansToDegrees((float) Math.atan2(-r12, -r31*r13)); // yaw
+            u.y = RadiansToDegrees((float) Math.atan2(-r12, -r31*r13)); // yaw
+            u.z = RadiansToDegrees((float) (-(Math.PI/2) * r31/tmp)); // pitch
             return u;
         }
         u.x = RadiansToDegrees((float) Math.atan2(r32, r33)); // roll
-        u.y = RadiansToDegrees((float) Math.asin(-r31)); // pitch
-        u.z = RadiansToDegrees((float) Math.atan2(r21, r11)); // yaw
+        u.y = RadiansToDegrees((float) Math.atan2(r21, r11)); // yaw
+        u.z = RadiansToDegrees((float) Math.asin(-r31)); // pitch
         return u;
     }
     public Quaternion copy() {

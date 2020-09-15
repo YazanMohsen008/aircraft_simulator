@@ -25,6 +25,13 @@ public class MathVector {
         this.y -= mMathVector.getY();
         this.z -= mMathVector.getZ();
     }
+
+    public void Sub(float value){
+        this.x -= value;
+        this.y -= value;
+        this.z -= value;
+    }
+
     public void Div(float n){
         this.x /= n;
         this.y /= n;

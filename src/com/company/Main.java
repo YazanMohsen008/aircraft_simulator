@@ -29,7 +29,7 @@ public class Main {
         TexturedModel bunnyTexturedModel = new TexturedModel(bunny, bunnyTexture);
 
         // Airplane class suppose to load an airplane, but for now it loads a bunny
-        Airplane movingBunny = new Airplane(bunnyTexturedModel, new MathVector(100, 30, 50), 0, 0, 0,
+        Airplane movingBunny = new Airplane(bunnyTexturedModel, new MathVector(100, 0, 50), 0, 0, 0,
                 0.25f,null);
         movingBunny.InitializeAirplane();
         Camera camera = new Camera(movingBunny);
@@ -45,21 +45,22 @@ public class Main {
 
         //loading terrain
         Terrain terrain0 = new Terrain(0, 0, loader, texturePack, blendMap,"grassy");
-        Terrain terrain1 = new Terrain(-1, 0, loader, texturePack, blendMap,"dirt");
-        Terrain terrain2 = new Terrain(-1, -1, loader, texturePack, blendMap,"grassFlowers");
-        Terrain terrain3 = new Terrain(0, -1, loader, texturePack, blendMap,"path");
+        Terrain terrain1 = new Terrain(1, 0, loader, texturePack, blendMap,"dirt");
+        Terrain terrain2 = new Terrain(2, 0, loader, texturePack, blendMap,"grassFlowers");
+        Terrain[] terrains = new Terrain[15];
+
+        for (int i = 0; i < 10; i ++) {
+            terrains[i] = new Terrain(i, 0, loader, texturePack, blendMap,"path");
+        }
 
         MasterRenderer renderer = new MasterRenderer(loader);
         while (!Display.isCloseRequested()) {
             camera.move();
             movingBunny.StepSimulation();
             renderer.processEntity(movingBunny);
-            renderer.processTerrain(terrain0);
-/*
-            renderer.processTerrain(terrain1)o
-            renderer.processTerrain(terrain2);
-            renderer.processTerrain(terrain3);
-*/
+            for (int i = 0; i < 7; i ++) {
+                renderer.processTerrain(terrains[i]);
+            }
 
             renderer.render(camera);
 

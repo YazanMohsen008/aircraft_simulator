@@ -115,8 +115,8 @@ public class AirplaneElement {
         float di = DegreesToRadians(this.Dihedral);
 
         this.NormalVector =new MathVector((float)Math.sin(in),
-                (float)(Math.cos(in)*Math.cos(di)),
-                (float)(Math.cos(in)*Math.sin(di))
+        (float)(Math.cos(in)*Math.cos(di)),
+        (float)(Math.cos(in)*Math.sin(di))
         );
         this.NormalVector.Normalize();
 
