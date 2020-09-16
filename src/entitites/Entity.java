@@ -29,9 +29,10 @@ public class Entity {
         this.Position.z += dz;
     }
 
+
     public void increaseRotation(float dx,float dz,  float dy) {
         this.rotX = dx;
-        this.rotY = (float) (dy + Math.toRadians(90));
+        this.rotY = (float) (dy+ Math.toRadians(90));
         this.rotZ = dz;
     }
 

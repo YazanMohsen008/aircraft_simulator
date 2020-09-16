@@ -5,15 +5,14 @@ import Physics.MathVector;
 import Terrain.Terrain;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.Label;
+import de.lessvoid.nifty.screen.ScreenController;
 import entitites.Airplane;
 import entitites.Camera;
-import entitites.Entity;
 import gui.GuiRenderer;
+import gui.ParametersScreenController;
 import gui.TextDecorator;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector;
-import org.lwjgl.util.vector.Vector3f;
 import renderEngine.*;
 import Models.RawModel;
 import textures.ModelTexture;
@@ -36,6 +35,7 @@ public class Main {
         TexturedModel airplaneTexturedModel = new TexturedModel(airplaneObjectModel, airPlaneTexture);
 
         // Airplane class suppose to load an airplane, but for now it loads a bunny
+
         Airplane airplane = new Airplane(airplaneTexturedModel, new MathVector(100, 0, 50), 0,
                 (float) Math.toRadians(180), 0,
                 0.5f,null);
@@ -64,6 +64,7 @@ public class Main {
         MasterRenderer renderer = new MasterRenderer(loader);
         GuiRenderer guiRenderer = new GuiRenderer();
         Nifty nifty = guiRenderer.initNifty();
+        airplane.setParametersController((ParametersScreenController) nifty.getCurrentScreen().getScreenController());
 
         long counter = 0;
         while (!Display.isCloseRequested()) {

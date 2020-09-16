@@ -34,20 +34,21 @@
 
                 <panel name="scrollBarPanel" childLayout="horizontal">
                     <panel childLayout="vertical">
-                        <control marginBottom="2%" marginTop="2%" name="label" text="Hola" />
-                        <control id="vsb1" name="verticalScrollbar" align="center" width="25%" height="85%"
-                                 worldMax="1000.0" worldPageSize="100.0" initial="10.0"
-                                 buttonStepSize="10.0" pageStepSize="100.0" />
+                        <control marginBottom="2%" marginTop="2%" name="label" marginLeft="-2%" text="Gravity" />
+                        <control id="gravity" name="verticalScrollbar" align="center" width="25%" height="85%"
+                                 worldMax="15.0" worldPageSize="1.0" initial="3.147"
+                                 buttonStepSize="1.0" pageStepSize="1.0" />
                     </panel>
 
                     <panel childLayout="vertical">
 
-                        <control marginBottom="2%" marginTop="2%" name="label" text="Hola" />
-                        <control id="vsb2" name="verticalScrollbar" align="center" width="25%" height="85%"
-                                 worldMax="1000.0" worldPageSize="100.0" initial="10.0"
-                                 buttonStepSize="10.0" pageStepSize="100.0" />
+                        <control marginBottom="2%" marginTop="2%" marginLeft="-2%" name="label" text="Air Density" />
+                        <control id="air_density" name="verticalScrollbar" align="center" width="25%" height="85%"
+                                 worldMax="0.5" worldPageSize="0.01" initial="0.0023769f"
+                                 buttonStepSize="0.01" pageStepSize="0.01" />
                     </panel>
 
+<!--
                     <panel childLayout="vertical">
                         <control marginBottom="2%" marginTop="2%" name="label" text="Hola" />
                         <control id="vsb3" name="verticalScrollbar" align="center" width="25%" height="85%"
@@ -62,6 +63,7 @@
                                  worldMax="1000.0" worldPageSize="100.0" initial="10.0"
                                  buttonStepSize="10.0" pageStepSize="100.0" />
                     </panel>
+-->
 
                 </panel>
 

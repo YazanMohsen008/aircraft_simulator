@@ -7,16 +7,22 @@ import de.lessvoid.nifty.controls.TextFieldChangedEvent;
 import de.lessvoid.nifty.screen.DefaultScreenController;
 
 public class ParametersScreenController extends DefaultScreenController{
-    // gravity and other values will be set here
-    // float gravity = event.getValue(); and so on
+
+    private float mAirDensity;
+    private float mGravity;
+    private boolean firstCallGravity = true;
+    private boolean firstCallDensity= true;
 
 
-    @NiftyEventSubscriber(id="vsb1")
+    @NiftyEventSubscriber(id="gravity")
     public void onScrollBarChanged1(final String id, final ScrollbarChangedEvent event) {
-
+        mGravity = event.getValue();
+        firstCallGravity = false;
     }
-    @NiftyEventSubscriber(id="vsb2")
+    @NiftyEventSubscriber(id="air_density")
     public void onScrollBarChanged2(final String id, final ScrollbarChangedEvent event) {
+        mAirDensity = event.getValue();
+        firstCallDensity= false;
 
     }
     @NiftyEventSubscriber(id="vsb3")
@@ -28,4 +34,17 @@ public class ParametersScreenController extends DefaultScreenController{
 
     }
 
+    public float getGravity() {
+        if (firstCallGravity) {
+            return (float) -3.174;
+        }
+        return - this.mGravity;
+    }
+
+    public float getAirDensity() {
+        if (firstCallDensity) {
+            return (float) 0.0023769f;
+        }
+        return this.mAirDensity;
+    }
 }
