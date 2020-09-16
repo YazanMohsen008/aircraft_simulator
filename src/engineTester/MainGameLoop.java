@@ -3,6 +3,8 @@ package engineTester;
 import Models.TexturedModel;
 import Terrain.Terrain;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.Label;
+import de.lessvoid.nifty.elements.Element;
 import entitites.Airplane;
 import entitites.Camera;
 import gui.GuiRenderer;
@@ -20,7 +22,7 @@ import textures.TerrainTexturePack;
 public class MainGameLoop {
     public static void main(String[] args) throws Exception {
 
-        final int MAX_TERRAIN_IN_ONE_QUARTER = 10;
+        final int MAX_TERRAIN_IN_ONE_QUARTER = 2;
         DisplayManager.createDisplay();
         Loader loader = new Loader();
         MasterRenderer renderer = new MasterRenderer(loader);
@@ -72,6 +74,12 @@ public class MainGameLoop {
             GL11.glDisable(GL11.GL_DEPTH_TEST);
             nifty.render(false);
             nifty.update();
+/*
+
+            nifty.getCurrentScreen().findNiftyControl("tl", Label.class).setText(movingBunny.
+                    getPosition().toString());
+*/
+
             GL11.glEnable(GL11.GL_DEPTH_TEST);
 
 

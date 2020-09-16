@@ -12,9 +12,24 @@
                    marginBottom="20"
                    backgroundColor="#55a5" padding="10">
                 <!-- simple vertical scrollbar -->
-                <panel backgroundColor="#80a5" childLayout="vertical" width="50%">
-                    <control with="100%" height="100%" name="label"
-                             text="Text Input Will goes Here" />
+
+                <panel backgroundColor="#80a5" childLayout="vertical" width="50%" height="100%">
+                    <control id="positions" name="label" backgroundColor="#50a5" marginBottom="2%"
+                             marginTop="2%" text="" />
+                    <control id="rotations" name="label" backgroundColor="#50a5" marginBottom="2%"
+                             marginTop="2%" text="" />
+                    <control id="velocity" name="label" backgroundColor="#50a5" marginBottom="2%"
+                             marginTop="2%" text="" />
+                    <control id="angular_velocity" name="label" backgroundColor="#50a5" marginBottom="2%"
+                             marginTop="2%" text="" />
+                    <control id="forces" name="label" backgroundColor="#50a5" marginBottom="2%"
+                             marginTop="2%" text="" />
+                    <control id="aoa_1" name="label" backgroundColor="#50a5" marginBottom="2%"
+                             marginTop="2%" text="" />
+                    <control id="aoa_2" name="label" backgroundColor="#50a5" marginBottom="2%"
+                             marginTop="2%" text="" />
+                    <control id="air_density" name="label" backgroundColor="#50a5" marginBottom="2%"
+                             marginTop="2%" text="" />
                 </panel>
 
                 <panel name="scrollBarPanel" childLayout="horizontal">
