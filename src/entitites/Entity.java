@@ -31,7 +31,7 @@ public class Entity {
 
     public void increaseRotation(float dx,float dz,  float dy) {
         this.rotX = dx;
-        this.rotY = dy;
+        this.rotY = (float) (dy + Math.toRadians(90));
         this.rotZ = dz;
     }
 

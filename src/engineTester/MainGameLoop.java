@@ -20,17 +20,17 @@ public class MainGameLoop {
         Loader loader = new Loader();
 
 
-        RawModel bunny = OBJLoader.loadObjModel("bunny", loader);
+        RawModel airplaneRawModel = OBJLoader.loadObjModel("A", loader);
 
         ModelTexture bunnyTexture = new ModelTexture(loader.loadTexture("white"));
 
-        TexturedModel bunnyTexturedModel = new TexturedModel(bunny, bunnyTexture);
+        TexturedModel airpalaneTexturedModel = new TexturedModel(airplaneRawModel, bunnyTexture);
 
         // Airplane class suppose to load an airplane, but for now it loads a bunny
-        Airplane movingBunny = new Airplane(bunnyTexturedModel, new MathVector(500,0 ,50),
+        Airplane airplane= new Airplane(airpalaneTexturedModel, new MathVector(500,0 ,50),
                 0, 0, 0, 0.25f,null);
 
-        Camera camera = new Camera(movingBunny);
+        Camera camera = new Camera(airplane);
 
         // loading groundTexture
         TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("grassy"));
@@ -43,13 +43,13 @@ public class MainGameLoop {
 
         //loading terrain
         Terrain terrain0 = new Terrain(0, 0, loader, texturePack, blendMap, "heightMap");
-        movingBunny.InitializeAirplane();
+        airplane.InitializeAirplane();
         MasterRenderer renderer = new MasterRenderer(loader);
         while (!Display.isCloseRequested()) {
             camera.move();
             // TODO: need to check which terrain the airplane is moving on for proper collision detection
-            movingBunny.StepSimulation();
-            renderer.processEntity(movingBunny);
+            airplane.StepSimulation();
+            renderer.processEntity(airplane);
             renderer.processTerrain(terrain0);
 
             renderer.render(camera);

@@ -31,12 +31,12 @@ public class Airplane extends Entity {
 
 
     //Math
-    final float	g	= -32.174f;		// acceleration due to gravity, ft/s^2
+    final float	g	= -3.174f;		// acceleration due to gravity, ft/s^2
     final float	rho = 0.0023769f;	// desity of air at sea level, slugs/ft^3
     final float	tol = 0.0001f;		// float type tolerance
 
     final float _MAXTHRUST= 3000.0f;
-    final float _DTHRUST= 10.0f;
+    final float _DTHRUST= 2.0f;
 
     //Rigid Body
     private float      AirplaneMass = 0;
@@ -51,7 +51,7 @@ public class Airplane extends Entity {
     private Quaternion Orientation=new Quaternion();                        // orientation in earth coordinates
     private MathVector Forces= new MathVector(0, 0f, 0);            // total force on body
     private MathVector Moments= new MathVector(0, 0f, 0);           // total moment (torque) on body
-    private float ThrustForce = 1;
+    private float ThrustForce = 10;
 
     MathVector Thrust=new MathVector();
 
@@ -62,6 +62,7 @@ public class Airplane extends Entity {
 
     public Airplane(TexturedModel model, MathVector position, float rotX, float rotY, float rotZ, float scale
             , AirplaneElement[] AirplaneElements) {
+
         super(model, position, rotX, rotY, rotZ, scale);
         for(int i=0;i<this.AirplaneElements.length;i++)
             this.AirplaneElements[i] = new AirplaneElement();
@@ -73,7 +74,7 @@ public class Airplane extends Entity {
         float iRoll, iPitch, iYaw;
 
         // Set initial velocity
-        this.Velocity.x = 60.0f;
+        this.Velocity.x = 20.0f;
         this.Velocity.y = 0.0f;
         this.Velocity.z = 0.0f;
         this.Speed = 0.0f;
@@ -84,10 +85,10 @@ public class Airplane extends Entity {
         this.AngularVelocity.z = 0.0f;
 
         // Set the initial thrust, forces and moments
-        this.Forces.x = 500.0f;
+        this.Forces.x = 0.0f;
         this.Forces.y = 0.0f;
         this.Forces.z = 0.0f;
-        this.ThrustForce = 500;
+        this.ThrustForce = 1;
 
         this.Moments.x = 0.0f;
         this.Moments.y = 0.0f;
@@ -350,7 +351,7 @@ public class Airplane extends Entity {
             //v=v+w*r
             // velocity = local speed
             LocalVelocity = this.VelocityBody.copy();
-            Velocity.Add(vtmp);
+            LocalVelocity.Add(vtmp);
 
             // Calculate local air speed
             LocalSpeed = LocalVelocity.Magnitude();
@@ -476,10 +477,8 @@ public class Airplane extends Entity {
         if (dt < 0.001f) dt = 0.001f;
 
         Ae = this.Forces.copy();
-        System.out.println("Forces = " + Forces);
         Ae.Div(AirplaneMass);
         Ae.Mult(dt);
-        System.out.println("Velocity = " + Ae);
 
         // calculate the velocity of the airplane in earth space:
         this.Velocity.Add(Ae);
@@ -488,7 +487,7 @@ public class Airplane extends Entity {
         pos.Mult(dt);
 
 
-        System.out.println("Pos = " + pos);
+        System.out.println("Pos = " +getPosition());
         increasePosition(pos.x, pos.y, pos.z);
         //System.out.println(super.getPosition());
 
@@ -531,7 +530,11 @@ public class Airplane extends Entity {
         this.EulerAngles.y = u.y; // pitch
         this.EulerAngles.z = u.z; // yaw
 
-       increaseRotation(this.EulerAngles.x, this.EulerAngles.y, this.EulerAngles.z);
+       increaseRotation(
+               (float) Math.toRadians(this.EulerAngles.x),
+                (float) Math.toRadians(this.EulerAngles.y),
+                (float) Math.toRadians(this.EulerAngles.z)
+       );
 
 
        //SetCameraPosition(-this.getPosition().y, this.getPosition().z, this.getPosition().x);
@@ -912,6 +915,71 @@ public class Airplane extends Entity {
  AirplaneElements[7].Area = 84.0f;
  AirplaneElements[7].Flap = 0;
 
+ // y is up, x is left, z is right
+
+ AirplaneElements[0].Mass = 6.56f;
+ AirplaneElements[0].Position =new MathVector(14.5f,  2.5f, 12.0f);
+ AirplaneElements[0].LocalInertia = new MathVector(13.92f ,  24.00f, 10.50f);
+ AirplaneElements[0].Incidence = -3.5f;
+ AirplaneElements[0].Dihedral = 0.0f;
+ AirplaneElements[0].Area = 31.2f;
+ AirplaneElements[0].Flap = 0;
+
+ AirplaneElements[1].Mass = 7.31f;
+ AirplaneElements[1].Position =new MathVector(14.5f, 2.5f, 5.5f);
+ AirplaneElements[1].LocalInertia = new MathVector(21.95f ,  33.67f, 12.22f);
+ AirplaneElements[1].Incidence = -3.5f;
+ AirplaneElements[1].Dihedral = 0.0f;
+ AirplaneElements[1].Area = 36.4f;
+ AirplaneElements[1].Flap = 0;
+
+ AirplaneElements[2].Mass = 7.31f;
+ AirplaneElements[2].Position = new MathVector(14.5f, 2.5f, -5.5f);
+ AirplaneElements[2].LocalInertia =new MathVector(21.95f,   33.67f, 12.22f);
+ AirplaneElements[2].Incidence = -3.5f;
+ AirplaneElements[2].Dihedral = 0.0f;
+ AirplaneElements[2].Area = 36.4f;
+ AirplaneElements[2].Flap = 0;
+
+ AirplaneElements[3].Mass = 6.56f;
+ AirplaneElements[3].Position = new MathVector(14.5f, 2.5f, -12.0f);
+ AirplaneElements[3].LocalInertia = new MathVector(13.92f,  24.00f, 10.50f);
+ AirplaneElements[3].Incidence = -3.5f;
+ AirplaneElements[3].Dihedral = 0.0f;
+ AirplaneElements[3].Area = 31.2f;
+ AirplaneElements[3].Flap = 0;
+
+ AirplaneElements[4].Mass = 2.62f;
+ AirplaneElements[4].Position = new MathVector(3.03f, 3.0f, 2.5f);
+ AirplaneElements[4].LocalInertia = new MathVector(0.837f,   1.206f, 0.385f);
+ AirplaneElements[4].Incidence = 0.0f;
+ AirplaneElements[4].Dihedral = 0.0f;
+ AirplaneElements[4].Area = 10.8f;
+ AirplaneElements[4].Flap = 0;
+
+ AirplaneElements[5].Mass = 2.62f;
+ AirplaneElements[5].Position = new MathVector(3.03f, 3.0f, -2.5f);
+ AirplaneElements[5].LocalInertia = new MathVector(0.837f,   1.206f, 0.385f);
+ AirplaneElements[5].Incidence = 0.0f;
+ AirplaneElements[5].Dihedral = 0.0f;
+ AirplaneElements[5].Area = 10.8f;
+ AirplaneElements[5].Flap = 0;
+
+ AirplaneElements[6].Mass = 2.93f;
+ AirplaneElements[6].Position =new MathVector(2.25f, 5.0f, 0.0f);
+ AirplaneElements[6].LocalInertia =new MathVector(1.262f ,  0.718f, 1.942f);
+ AirplaneElements[6].Incidence = 0.0f;
+ AirplaneElements[6].Dihedral = 90.0f;
+ AirplaneElements[6].Area = 12.0f;
+ AirplaneElements[6].Flap = 0;
+
+ AirplaneElements[7].Mass = 31.8f;
+ AirplaneElements[7].Position = new MathVector(15.25f, 1.5f, 0.0f);
+ AirplaneElements[7].LocalInertia = new MathVector(66.30f,  861.9f, 861.9f);
+ AirplaneElements[7].Incidence = 0.0f;
+ AirplaneElements[7].Dihedral = 0.0f;
+ AirplaneElements[7].Area = 84.0f;
+ AirplaneElements[7].Flap = 0;
 
 
  */

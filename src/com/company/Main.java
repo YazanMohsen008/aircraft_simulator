@@ -22,17 +22,18 @@ public class Main {
         Loader loader = new Loader();
     
 
-        RawModel bunny = OBJLoader.loadObjModel("bunny", loader);
+        RawModel airplaneObjectModel = OBJLoader.loadObjModel("A", loader);
 
-        ModelTexture bunnyTexture = new ModelTexture(loader.loadTexture("white"));
+        ModelTexture airPlaneTexture = new ModelTexture(loader.loadTexture("white"));
 
-        TexturedModel bunnyTexturedModel = new TexturedModel(bunny, bunnyTexture);
+        TexturedModel airplaneTexturedModel = new TexturedModel(airplaneObjectModel, airPlaneTexture);
 
         // Airplane class suppose to load an airplane, but for now it loads a bunny
-        Airplane movingBunny = new Airplane(bunnyTexturedModel, new MathVector(100, 0, 50), 0, 0, 0,
-                0.25f,null);
-        movingBunny.InitializeAirplane();
-        Camera camera = new Camera(movingBunny);
+        Airplane airplane = new Airplane(airplaneTexturedModel, new MathVector(100, 0, 50), 0,
+                (float) Math.toRadians(180), 0,
+                0.5f,null);
+        airplane.InitializeAirplane();
+        Camera camera = new Camera(airplane);
     
         // loading groundTexture
         TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("grassy"));
@@ -56,9 +57,9 @@ public class Main {
         MasterRenderer renderer = new MasterRenderer(loader);
         while (!Display.isCloseRequested()) {
             camera.move();
-            movingBunny.StepSimulation();
-            renderer.processEntity(movingBunny);
-            for (int i = 0; i < 7; i ++) {
+            airplane.StepSimulation();
+            renderer.processEntity(airplane);
+            for (int i = 0; i < 4; i ++) {
                 renderer.processTerrain(terrains[i]);
             }
 
