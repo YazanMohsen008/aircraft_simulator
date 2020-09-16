@@ -3,9 +3,14 @@ package engineTester;
 import Models.TexturedModel;
 import Physics.MathVector;
 import Terrain.Terrain;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.Label;
+import de.lessvoid.nifty.elements.Element;
 import entitites.Airplane;
 import entitites.Camera;
+import gui.GuiRenderer;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.*;
 import Models.RawModel;
@@ -13,12 +18,16 @@ import textures.ModelTexture;
 import textures.TerrainTexture;
 import textures.TerrainTexturePack;
 
-public class MainGameLoop {
-    public static void main(String[] args) {
 
+
+public class MainGameLoop {
+    public static void main(String[] args) throws Exception {
+
+        final int MAX_TERRAIN_IN_ONE_QUARTER = 2;
         DisplayManager.createDisplay();
         Loader loader = new Loader();
-
+        MasterRenderer renderer = new MasterRenderer(loader);
+        // gui rendering panel
 
         RawModel airplaneRawModel = OBJLoader.loadObjModel("A", loader);
 
@@ -32,33 +41,59 @@ public class MainGameLoop {
 
         Camera camera = new Camera(airplane);
 
+
         // loading groundTexture
         TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("grassy"));
         TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("dirt"));
         TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("grassFlowers"));
-        TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("path"));
+        TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("grassy"));
         TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
 
         TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 
         //loading terrain
-        Terrain terrain0 = new Terrain(0, 0, loader, texturePack, blendMap, "heightMap");
-        airplane.InitializeAirplane();
-        MasterRenderer renderer = new MasterRenderer(loader);
+        Terrain[][] terrains = new Terrain[MAX_TERRAIN_IN_ONE_QUARTER][MAX_TERRAIN_IN_ONE_QUARTER];
+
+        for (int i = 0; i < MAX_TERRAIN_IN_ONE_QUARTER; i++) {
+            for (int j = 0; j < MAX_TERRAIN_IN_ONE_QUARTER; j++)
+                terrains[i][j] = new Terrain(i - (MAX_TERRAIN_IN_ONE_QUARTER / 2),
+                        j - (MAX_TERRAIN_IN_ONE_QUARTER / 2),
+                        loader, texturePack, blendMap);
+        }
+
+        GuiRenderer guiRenderer = new GuiRenderer();
+        Nifty nifty = guiRenderer.initNifty();
         while (!Display.isCloseRequested()) {
+            DisplayManager.updateDisplay();
             camera.move();
             // TODO: need to check which terrain the airplane is moving on for proper collision detection
             airplane.StepSimulation();
             renderer.processEntity(airplane);
-            renderer.processTerrain(terrain0);
+            renderer.processEntity(airplane);
+            for (int i = 0; i < MAX_TERRAIN_IN_ONE_QUARTER; i++) {
+                for (int j = 0; j < MAX_TERRAIN_IN_ONE_QUARTER; j++)
+                    renderer.processTerrain(terrains[i][j]);
+            }
 
             renderer.render(camera);
 
-            DisplayManager.updateDisplay();
-        }
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
+            nifty.render(false);
+            nifty.update();
+/*
 
+            nifty.getCurrentScreen().findNiftyControl("tl", Label.class).setText(movingBunny.
+                    getPosition().toString());
+*/
+
+            GL11.glEnable(GL11.GL_DEPTH_TEST);
+
+
+        }
+        guiRenderer.shutDown();
         renderer.cleanUP();
         loader.cleanUp();
         DisplayManager.closeDisplay();
     }
 }
+

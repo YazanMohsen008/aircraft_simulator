@@ -31,24 +31,19 @@ public class Terrain {
     private float[][] heights;
 
     public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack,
-                   TerrainTexture blendMap, String heightMap) {
+                   TerrainTexture blendMap) {
         this.x = gridX * SIZE;
         this.z = gridZ * SIZE;
         this.texturePack = texturePack;
         this.blendMap = blendMap;
-        this.model = generateTerrain(loader, heightMap);
+        this.model = generateTerrain(loader);
     }
 
-    private RawModel generateTerrain(Loader loader, String heightMap){
+    private RawModel generateTerrain(Loader loader){
+        HeightsGenerator generator = new HeightsGenerator();
 
         BufferedImage image = null;
-
-        try {
-            image = ImageIO.read(new File("res/" + heightMap + ".png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int VERTEX_COUNT = image.getHeight();
+        int VERTEX_COUNT = 128;
 
         heights = new float[VERTEX_COUNT][VERTEX_COUNT];
 
@@ -61,7 +56,7 @@ public class Terrain {
         for(int i=0;i<VERTEX_COUNT;i++){
             for(int j=0;j<VERTEX_COUNT;j++){
                 vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
-                float height = getHeight(j, i , image);
+                float height = getHeight(j, i , generator);
                 heights[j][i] = height;
                 vertices[vertexPointer*3+1] = height;
                 vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
@@ -112,18 +107,10 @@ public class Terrain {
     }
 
 
-    private float getHeight(int x, int y, BufferedImage image) {
-        if (x < 0  || x > image.getHeight() || y < 0 || y > image.getHeight()) {
-            return 0;
-        }
-
-        float height = image.getRGB(x, y);
-        height += MAX_PIXEL_COLOR / 2.0f;
-        height /= MAX_PIXEL_COLOR;
-        height *= MAX_HEIGHT;
-
-        return 0;
+    private float getHeight(int x, int z, HeightsGenerator generator) {
+        return generator.genereteHeight(x, z);
     }
+
     public float getHeight(float worldX, float worldZ) {
         float terrainX = worldX - this.x;
         float terrainZ = worldZ - this.z;

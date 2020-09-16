@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty xmlns="http://nifty-gui.lessvoid.com/nifty-gui">
+
+    <useStyles filename="nifty-default-styles.xml" />
+    <useControls filename="nifty-default-controls.xml" />
+
+    <screen id="start" controller="gui.ParametersScreenController">
+
+        <layer childLayout="center">
+
+            <panel childLayout="horizontal" align="right" valign="bottom" width="50%" height="40%"
+                   marginBottom="20"
+                   backgroundColor="#55a5" padding="10">
+                <!-- simple vertical scrollbar -->
+
+                <panel backgroundColor="#80a5" childLayout="vertical" width="50%" height="100%">
+                    <control id="positions" name="label" backgroundColor="#50a5" marginBottom="2%"  width="90%"
+                             marginTop="2%" text="" />
+                    <control id="rotations" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+                             marginTop="2%" text="" />
+                    <control id="velocity" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+                             marginTop="2%" text="" />
+                    <control id="angular_velocity" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+                             marginTop="2%" text="" />
+                    <control id="forces" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+                             marginTop="2%" text="" />
+                    <control id="aoa_1" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+                             marginTop="2%" text="" />
+                    <control id="aoa_2" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+                             marginTop="2%" text="" />
+                    <control id="air_density" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+                             marginTop="2%" text="" />
+                </panel>
+
+                <panel name="scrollBarPanel" childLayout="horizontal">
+                    <panel childLayout="vertical">
+                        <control marginBottom="2%" marginTop="2%" name="label" text="Hola" />
+                        <control id="vsb1" name="verticalScrollbar" align="center" width="25%" height="85%"
+                                 worldMax="1000.0" worldPageSize="100.0" initial="10.0"
+                                 buttonStepSize="10.0" pageStepSize="100.0" />
+                    </panel>
+
+                    <panel childLayout="vertical">
+
+                        <control marginBottom="2%" marginTop="2%" name="label" text="Hola" />
+                        <control id="vsb2" name="verticalScrollbar" align="center" width="25%" height="85%"
+                                 worldMax="1000.0" worldPageSize="100.0" initial="10.0"
+                                 buttonStepSize="10.0" pageStepSize="100.0" />
+                    </panel>
+
+                    <panel childLayout="vertical">
+                        <control marginBottom="2%" marginTop="2%" name="label" text="Hola" />
+                        <control id="vsb3" name="verticalScrollbar" align="center" width="25%" height="85%"
+                                 worldMax="1000.0" worldPageSize="100.0" initial="10.0"
+                                 buttonStepSize="10.0" pageStepSize="100.0" />
+
+                    </panel>
+
+                    <panel childLayout="vertical">
+                        <control marginBottom="2%" marginTop="2%" name="label" text="Hola" />
+                        <control id="vsb4" name="verticalScrollbar" align="center" width="25%" height="85%"
+                                 worldMax="1000.0" worldPageSize="100.0" initial="10.0"
+                                 buttonStepSize="10.0" pageStepSize="100.0" />
+                    </panel>
+
+                </panel>
+
+            </panel>
+        </layer>
+
+    </screen>
+</nifty>

@@ -46,12 +46,17 @@ public class Airplane extends Entity {
     private MathVector Velocity = new MathVector(0, 0f, 0);         //Velocity in ground Coordinates
     private MathVector VelocityBody = new MathVector(0, 0f, 0);     //Linear Velocity in body Coordinates
     private MathVector AngularVelocity = new MathVector(0, 0f, 0);  //AngularVelocity in body Coordinates
-    private MathVector EulerAngles= new MathVector(0, 0f, 0);;      // Euler angles in body coordinates
+    private MathVector EulerAngles= new MathVector(0, 0f, 0);      // Euler angles in body coordinates
     private float      Speed;                                               // speed (magnitude of the velocity)
     private Quaternion Orientation=new Quaternion();                        // orientation in earth coordinates
     private MathVector Forces= new MathVector(0, 0f, 0);            // total force on body
     private MathVector Moments= new MathVector(0, 0f, 0);           // total moment (torque) on body
     private float ThrustForce = 10;
+
+    private float aoaAileron;
+    private float aoaFlaps;
+    private float aoaElevator;
+    private float aoaRudder;
 
     MathVector Thrust=new MathVector();
 
@@ -383,6 +388,21 @@ public class Airplane extends Entity {
             if (tmp > 1.) tmp = 1;
             if (tmp < -1) tmp = -1;
             AttackAngle = RadiansToDegrees((float) Math.asin(tmp));
+            if (i == 0) {
+                aoaAileron = AttackAngle;
+            }
+            else if (i == 1) {
+                aoaFlaps = AttackAngle;
+            }
+
+            else if (i == 2) {
+                aoaElevator = AttackAngle;
+            }
+
+            else if (i == 3) {
+                aoaRudder = AttackAngle;
+            }
+
             // Determine the resultant force (lift and drag) on the element.
             tmp = 0.5f * rho * LocalSpeed * LocalSpeed * AirplaneElements[i].Area;
             if (i == 6) // Tail/rudder
@@ -487,7 +507,7 @@ public class Airplane extends Entity {
         pos.Mult(dt);
 
 
-        System.out.println("Pos = " +getPosition());
+        //System.out.println("Pos = " +getPosition());
         increasePosition(pos.x, pos.y, pos.z);
         //System.out.println(super.getPosition());
 
@@ -829,7 +849,48 @@ public class Airplane extends Entity {
             }
         }
         return cd;
-    }}
+    }
+
+    public float getRho() {
+        return rho;
+    }
+
+    public MathVector getVelocityBody() {
+        return VelocityBody;
+    }
+
+    public MathVector getAngularVelocity() {
+        return AngularVelocity;
+    }
+
+    public MathVector getEulerAngles() {
+        return EulerAngles;
+    }
+
+    public MathVector getForces() {
+        return Forces;
+    }
+
+    public MathVector getPosision() {
+        return super.getPosition();
+    }
+
+    public float getAoaAileron() {
+        return aoaAileron;
+    }
+
+    public float getAoaFlaps() {
+        return aoaFlaps;
+    }
+
+    public float getAoaElevator() {
+        return aoaElevator;
+    }
+
+    public float getAoaRudder() {
+        return aoaRudder;
+    }
+}
 
 
 

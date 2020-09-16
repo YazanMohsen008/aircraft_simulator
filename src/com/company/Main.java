@@ -3,10 +3,15 @@ package com.company;
 import Models.TexturedModel;
 import Physics.MathVector;
 import Terrain.Terrain;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.Label;
 import entitites.Airplane;
 import entitites.Camera;
 import entitites.Entity;
+import gui.GuiRenderer;
+import gui.TextDecorator;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.*;
@@ -17,6 +22,8 @@ import textures.TerrainTexturePack;
 
 public class Main {
     public static void main(String[] args) {
+
+        final int MAX_TERRAIN_IN_ONE_QUARTER = 2;
 
         DisplayManager.createDisplay();
         Loader loader = new Loader();
@@ -44,32 +51,80 @@ public class Main {
 
         TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 
-        //loading terrain
-        Terrain terrain0 = new Terrain(0, 0, loader, texturePack, blendMap,"grassy");
-        Terrain terrain1 = new Terrain(1, 0, loader, texturePack, blendMap,"dirt");
-        Terrain terrain2 = new Terrain(2, 0, loader, texturePack, blendMap,"grassFlowers");
-        Terrain[] terrains = new Terrain[15];
+        Terrain[][] terrains = new Terrain[MAX_TERRAIN_IN_ONE_QUARTER][MAX_TERRAIN_IN_ONE_QUARTER];
 
-        for (int i = 0; i < 10; i ++) {
-            terrains[i] = new Terrain(i, 0, loader, texturePack, blendMap,"path");
+        for (int i = 0; i < MAX_TERRAIN_IN_ONE_QUARTER; i++) {
+            for (int j = 0; j < MAX_TERRAIN_IN_ONE_QUARTER; j++)
+                terrains[i][j] = new Terrain(i - (MAX_TERRAIN_IN_ONE_QUARTER / 2),
+                        j - (MAX_TERRAIN_IN_ONE_QUARTER / 2),
+                        loader, texturePack, blendMap);
         }
 
+
         MasterRenderer renderer = new MasterRenderer(loader);
+        GuiRenderer guiRenderer = new GuiRenderer();
+        Nifty nifty = guiRenderer.initNifty();
+
+        long counter = 0;
         while (!Display.isCloseRequested()) {
+            DisplayManager.updateDisplay();
             camera.move();
             airplane.StepSimulation();
             renderer.processEntity(airplane);
-            for (int i = 0; i < 4; i ++) {
-                renderer.processTerrain(terrains[i]);
+
+            for (int i = 0; i < MAX_TERRAIN_IN_ONE_QUARTER; i++) {
+                for (int j = 0; j < MAX_TERRAIN_IN_ONE_QUARTER; j++)
+                    renderer.processTerrain(terrains[i][j]);
             }
 
             renderer.render(camera);
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
+            nifty.render(false);
+            nifty.update();
 
-            DisplayManager.updateDisplay();
+
+            if (counter % 15 == 0)
+                updateNitfyValueScreen(nifty, airplane);
+
+            GL11.glEnable(GL11.GL_DEPTH_TEST);
+
+            counter ++;
+            if (counter == 1000000000) counter = 0;
         }
 
+        guiRenderer.shutDown();
         renderer.cleanUP();
         loader.cleanUp();
         DisplayManager.closeDisplay();
     }
+
+    private static void updateNitfyValueScreen(Nifty nifty, Airplane airplane) {
+        TextDecorator decorator = new TextDecorator(airplane);
+
+        nifty.getCurrentScreen().findNiftyControl("forces", Label.class).setText(decorator
+                .getForces());
+
+        nifty.getCurrentScreen().findNiftyControl("positions", Label.class).setText(decorator
+                .getPosition());
+
+        nifty.getCurrentScreen().findNiftyControl("rotations", Label.class).setText(decorator
+                .getRotations());
+
+        nifty.getCurrentScreen().findNiftyControl("velocity", Label.class).setText(decorator
+                .getVelocity());
+
+        nifty.getCurrentScreen().findNiftyControl("angular_velocity", Label.class).setText(decorator
+                .getAngularVelocity());
+
+        nifty.getCurrentScreen().findNiftyControl("aoa_1", Label.class).setText(decorator
+                .getAOA1());
+
+        nifty.getCurrentScreen().findNiftyControl("aoa_2", Label.class).setText(decorator
+                .getAOA2());
+
+        nifty.getCurrentScreen().findNiftyControl("air_density", Label.class).setText(decorator
+                .getAirDensity());
+
+    }
+
 }
