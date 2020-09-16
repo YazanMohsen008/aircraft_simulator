@@ -24,7 +24,7 @@ public class Main {
 
         RawModel airplaneObjectModel = OBJLoader.loadObjModel("A", loader);
 
-        ModelTexture airPlaneTexture = new ModelTexture(loader.loadTexture("white"));
+        ModelTexture airPlaneTexture = new ModelTexture(loader.loadTexture("A_tex"));
 
         TexturedModel airplaneTexturedModel = new TexturedModel(airplaneObjectModel, airPlaneTexture);
 
