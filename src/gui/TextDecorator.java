@@ -17,6 +17,11 @@ public class TextDecorator {
     String mPosition;
     String mRotations;
     String mDensity;
+    String mAirVelocity;
+    String mLift;
+    String mDrag;
+    String mThrust;
+    String mGravity;
 
 
     public TextDecorator(Airplane airplane) {
@@ -38,6 +43,20 @@ public class TextDecorator {
         return mForces;
     }
 
+
+    public String getThrust() {
+        String patern = "###.###";
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        DecimalFormat df = (DecimalFormat) nf;
+        df.applyPattern(patern);
+
+        mThrust = "Thrust: \tx = " +  df.format(airplane.getThrust().getX()) + "  y = "
+                + df.format(airplane.getThrust().getY()) + " z = "
+                + df.format(airplane.getThrust().getZ());
+
+        return mThrust;
+    }
+
     public String getVelocity() {
         String patern = "###.###";
         NumberFormat nf = NumberFormat.getNumberInstance();
@@ -49,6 +68,17 @@ public class TextDecorator {
                 + df.format(airplane.getVelocityBody().getZ());
 
         return mVelocity;
+    }
+
+    public String getAirVelocity() {
+        String patern = "###.###";
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        DecimalFormat df = (DecimalFormat) nf;
+        df.applyPattern(patern);
+
+        mAirVelocity = "Air speed: " +  df.format(airplane.getAirSpeed());
+
+        return mAirVelocity;
     }
 
     public String getAngularVelocity() {
@@ -127,6 +157,17 @@ public class TextDecorator {
         mDensity = "Air Density = " +  df.format(airplane.getRho());
 
         return mDensity;
+    }
+
+    public String getGravity() {
+        String patern = "##.######";
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        DecimalFormat df = (DecimalFormat) nf;
+        df.applyPattern(patern);
+
+        mGravity = "Gravity = " +  df.format(airplane.getGravity());
+
+        return mGravity;
     }
 
 }

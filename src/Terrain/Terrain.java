@@ -108,7 +108,8 @@ public class Terrain {
 
 
     private float getHeight(int x, int z, HeightsGenerator generator) {
-        return generator.genereteHeight(x, z);
+        //return generator.genereteHeight(x, z);
+        return 0;
     }
 
     public float getHeight(float worldX, float worldZ) {

@@ -8,42 +8,55 @@
 
         <layer childLayout="center">
 
-            <panel childLayout="horizontal" align="right" valign="bottom" width="50%" height="40%"
-                   marginBottom="20"
+            <panel childLayout="vertical" align="right" valign="bottom" width="30%" height="100%"
+                   margin="3%"
                    backgroundColor="#55a5" padding="10">
                 <!-- simple vertical scrollbar -->
 
-                <panel backgroundColor="#80a5" childLayout="vertical" width="50%" height="100%">
-                    <control id="positions" name="label" backgroundColor="#50a5" marginBottom="2%"  width="90%"
+                <panel backgroundColor="#80a5" childLayout="vertical" height="70%">
+                    <control id="positions" name="label" backgroundColor="#50a5" marginBottom="1.5%"  width="90%"
                              marginTop="2%" text="" />
-                    <control id="rotations" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+                    <control id="rotations" name="label" backgroundColor="#50a5" marginBottom="1.5%" width="90%"
                              marginTop="2%" text="" />
-                    <control id="velocity" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+                    <control id="velocity" name="label" backgroundColor="#50a5" marginBottom="1.5%" width="90%"
                              marginTop="2%" text="" />
-                    <control id="angular_velocity" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+                    <control id="angular_velocity" name="label" backgroundColor="#50a5" marginBottom="1.5%" width="90%"
                              marginTop="2%" text="" />
-                    <control id="forces" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+
+                    <control id="thrust_force" name="label" backgroundColor="#50a5" marginBottom="1.5%" width="90%"
                              marginTop="2%" text="" />
-                    <control id="aoa_1" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+
+                    <control id="total_force" name="label" backgroundColor="#50a5" marginBottom="1.5%" width="90%"
                              marginTop="2%" text="" />
-                    <control id="aoa_2" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+
+
+                    <control id="aoa_1" name="label" backgroundColor="#50a5" marginBottom="1.5%" width="90%"
                              marginTop="2%" text="" />
-                    <control id="air_density" name="label" backgroundColor="#50a5" marginBottom="2%" width="90%"
+                    <control id="aoa_2" name="label" backgroundColor="#50a5" marginBottom="1.5%" width="90%"
                              marginTop="2%" text="" />
+                    <control id="air_speed" name="label" backgroundColor="#50a5" marginBottom="1.5%" width="90%"
+                             marginTop="2%" text="" />
+
+                    <control id="air_density" name="label" backgroundColor="#50a5" marginBottom="1.5%" width="90%"
+                             marginTop="2%" text="" />
+
+                    <control id="gravity" name="label" backgroundColor="#50a5" marginBottom="1.5%" width="90%"
+                             marginTop="2%" text="" />
+
                 </panel>
 
-                <panel name="scrollBarPanel" childLayout="horizontal">
-                    <panel childLayout="vertical">
+                <panel name="scrollBarPanel" childLayout="vertical" height="30%">
+                    <panel childLayout="vertical" marginBottom="10%">
                         <control marginBottom="2%" marginTop="2%" name="label" marginLeft="-2%" text="Gravity" />
-                        <control id="gravity" name="verticalScrollbar" align="center" width="25%" height="85%"
-                                 worldMax="15.0" worldPageSize="1.0" initial="3.147"
+                        <control id="gravity_scroll" name="horizontalScrollbar" align="center" width="90%"
+                                 worldMax="50.0" worldPageSize="1.0" initial="3.147"
                                  buttonStepSize="1.0" pageStepSize="1.0" />
                     </panel>
 
                     <panel childLayout="vertical">
 
                         <control marginBottom="2%" marginTop="2%" marginLeft="-2%" name="label" text="Air Density" />
-                        <control id="air_density" name="verticalScrollbar" align="center" width="25%" height="85%"
+                        <control id="air_density_scroll" name="horizontalScrollbar" align="center" width="90%"
                                  worldMax="0.5" worldPageSize="0.01" initial="0.0023769f"
                                  buttonStepSize="0.01" pageStepSize="0.01" />
                     </panel>

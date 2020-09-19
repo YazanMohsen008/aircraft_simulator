@@ -5,7 +5,6 @@ import Physics.MathVector;
 import Terrain.Terrain;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.Label;
-import de.lessvoid.nifty.screen.ScreenController;
 import entitites.Airplane;
 import entitites.Camera;
 import gui.GuiRenderer;
@@ -22,7 +21,7 @@ import textures.TerrainTexturePack;
 public class Main {
     public static void main(String[] args) {
 
-        final int MAX_TERRAIN_IN_ONE_QUARTER = 2;
+        final int MAX_TERRAIN_IN_ONE_QUARTER = 4;
 
         DisplayManager.createDisplay();
         Loader loader = new Loader();
@@ -36,8 +35,8 @@ public class Main {
 
         // Airplane class suppose to load an airplane, but for now it loads a bunny
 
-        Airplane airplane = new Airplane(airplaneTexturedModel, new MathVector(100, 0, 50), 0,
-                (float) Math.toRadians(180), 0,
+        Airplane airplane = new Airplane(airplaneTexturedModel, new MathVector(100, 3, 50), 0,
+                0, 0,
                 0.5f,null);
         airplane.InitializeAirplane();
         Camera camera = new Camera(airplane);
@@ -51,14 +50,14 @@ public class Main {
 
         TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 
-        Terrain[][] terrains = new Terrain[MAX_TERRAIN_IN_ONE_QUARTER][MAX_TERRAIN_IN_ONE_QUARTER];
+        Terrain[] terrains1 = new Terrain[MAX_TERRAIN_IN_ONE_QUARTER];
+        Terrain[] terrains2 = new Terrain[MAX_TERRAIN_IN_ONE_QUARTER];
 
-        for (int i = 0; i < MAX_TERRAIN_IN_ONE_QUARTER; i++) {
             for (int j = 0; j < MAX_TERRAIN_IN_ONE_QUARTER; j++)
-                terrains[i][j] = new Terrain(i - (MAX_TERRAIN_IN_ONE_QUARTER / 2),
-                        j - (MAX_TERRAIN_IN_ONE_QUARTER / 2),
-                        loader, texturePack, blendMap);
-        }
+                terrains1[j] = new Terrain(j, 0, loader, texturePack, blendMap);
+
+            for (int j = 0; j < MAX_TERRAIN_IN_ONE_QUARTER; j++)
+                terrains2[j] = new Terrain(j, -1, loader, texturePack, blendMap);
 
 
         MasterRenderer renderer = new MasterRenderer(loader);
@@ -73,15 +72,22 @@ public class Main {
             airplane.StepSimulation();
             renderer.processEntity(airplane);
 
-            for (int i = 0; i < MAX_TERRAIN_IN_ONE_QUARTER; i++) {
                 for (int j = 0; j < MAX_TERRAIN_IN_ONE_QUARTER; j++)
-                    renderer.processTerrain(terrains[i][j]);
-            }
+                    renderer.processTerrain(terrains1[j]);
+
+            for (int j = 0; j < MAX_TERRAIN_IN_ONE_QUARTER; j++)
+                renderer.processTerrain(terrains2[j]);
 
             renderer.render(camera);
             GL11.glDisable(GL11.GL_DEPTH_TEST);
             nifty.render(false);
             nifty.update();
+            nifty.getCurrentScreen().getFocusHandler().lostKeyboardFocus(nifty.getCurrentScreen().
+                    findElementById("gravity_scroll"));
+
+            nifty.getCurrentScreen().getFocusHandler().lostKeyboardFocus(nifty.getCurrentScreen().
+                    findElementById("air_density_scroll"));
+
 
 
             if (counter % 15 == 0)
@@ -102,30 +108,28 @@ public class Main {
     private static void updateNitfyValueScreen(Nifty nifty, Airplane airplane) {
         TextDecorator decorator = new TextDecorator(airplane);
 
-        nifty.getCurrentScreen().findNiftyControl("forces", Label.class).setText(decorator
+        nifty.getCurrentScreen().findNiftyControl("thrust_force", Label.class).setText(decorator
+                .getThrust());
+        nifty.getCurrentScreen().findNiftyControl("total_force", Label.class).setText(decorator
                 .getForces());
-
         nifty.getCurrentScreen().findNiftyControl("positions", Label.class).setText(decorator
                 .getPosition());
-
         nifty.getCurrentScreen().findNiftyControl("rotations", Label.class).setText(decorator
                 .getRotations());
-
         nifty.getCurrentScreen().findNiftyControl("velocity", Label.class).setText(decorator
                 .getVelocity());
-
         nifty.getCurrentScreen().findNiftyControl("angular_velocity", Label.class).setText(decorator
                 .getAngularVelocity());
-
         nifty.getCurrentScreen().findNiftyControl("aoa_1", Label.class).setText(decorator
                 .getAOA1());
-
         nifty.getCurrentScreen().findNiftyControl("aoa_2", Label.class).setText(decorator
                 .getAOA2());
-
         nifty.getCurrentScreen().findNiftyControl("air_density", Label.class).setText(decorator
                 .getAirDensity());
-
+        nifty.getCurrentScreen().findNiftyControl("gravity", Label.class).setText(decorator
+                .getGravity());
+        nifty.getCurrentScreen().findNiftyControl("air_speed", Label.class).setText(decorator
+                .getAirVelocity());
     }
 
 }

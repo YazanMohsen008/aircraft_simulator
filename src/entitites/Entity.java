@@ -47,6 +47,9 @@ public class Entity {
     public MathVector getPosition() {
         return Position;
     }
+    public void setHeight(float position) {
+        this.Position.y = 0;
+    }
 
     public float getRotX() {
         return rotX;

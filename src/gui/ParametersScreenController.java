@@ -14,12 +14,12 @@ public class ParametersScreenController extends DefaultScreenController{
     private boolean firstCallDensity= true;
 
 
-    @NiftyEventSubscriber(id="gravity")
+    @NiftyEventSubscriber(id="gravity_scroll")
     public void onScrollBarChanged1(final String id, final ScrollbarChangedEvent event) {
         mGravity = event.getValue();
         firstCallGravity = false;
     }
-    @NiftyEventSubscriber(id="air_density")
+    @NiftyEventSubscriber(id="air_density_scroll")
     public void onScrollBarChanged2(final String id, final ScrollbarChangedEvent event) {
         mAirDensity = event.getValue();
         firstCallDensity= false;
