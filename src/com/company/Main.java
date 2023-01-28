@@ -4,13 +4,14 @@ import Models.TexturedModel;
 import Physics.MathVector;
 import Terrain.Terrain;
 import de.lessvoid.nifty.Nifty;
-import de.lessvoid.nifty.controls.Label;
 import entitites.Airplane;
 import entitites.Camera;
 import gui.GuiRenderer;
 import gui.ParametersScreenController;
 import gui.TextDecorator;
 import org.lwjgl.opengl.Display;
+import de.lessvoid.nifty.controls.Label;
+
 import org.lwjgl.opengl.GL11;
 import renderEngine.*;
 import Models.RawModel;
@@ -62,8 +63,9 @@ public class Main {
 
         MasterRenderer renderer = new MasterRenderer(loader);
         GuiRenderer guiRenderer = new GuiRenderer();
-        Nifty nifty = guiRenderer.initNifty();
-        airplane.setParametersController((ParametersScreenController) nifty.getCurrentScreen().getScreenController());
+//        Nifty nifty = guiRenderer.initNifty();
+//        airplane.setParametersController((ParametersScreenController) nifty.getCurrentScreen().getScreenController());
+        airplane.setParametersController(new ParametersScreenController());
 
         long counter = 0;
         while (!Display.isCloseRequested()) {
@@ -80,18 +82,18 @@ public class Main {
 
             renderer.render(camera);
             GL11.glDisable(GL11.GL_DEPTH_TEST);
-            nifty.render(false);
-            nifty.update();
-            nifty.getCurrentScreen().getFocusHandler().lostKeyboardFocus(nifty.getCurrentScreen().
-                    findElementById("gravity_scroll"));
+//            nifty.render(false);
+//            nifty.update();
+//            nifty.getCurrentScreen().getFocusHandler().lostKeyboardFocus(nifty.getCurrentScreen().
+//                    findElementById("gravity_scroll"));
+//
+//            nifty.getCurrentScreen().getFocusHandler().lostKeyboardFocus(nifty.getCurrentScreen().
+//                    findElementById("air_density_scroll"));
 
-            nifty.getCurrentScreen().getFocusHandler().lostKeyboardFocus(nifty.getCurrentScreen().
-                    findElementById("air_density_scroll"));
 
 
-
-            if (counter % 15 == 0)
-                updateNitfyValueScreen(nifty, airplane);
+//            if (counter % 15 == 0)
+//                updateNitfyValueScreen(nifty, airplane);
 
             GL11.glEnable(GL11.GL_DEPTH_TEST);
 
